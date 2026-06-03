@@ -1,0 +1,87 @@
+.onboarding-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.onboarding-modal {
+  width: 100%;
+  max-width: 480px;
+  background: var(--white);
+  border-radius: var(--r-lg);
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: modalSlideUp 0.3s ease-out;
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.onboarding-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.onboarding-dot {
+  width: 32px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--grey-200);
+  transition: all 0.3s ease;
+}
+
+.onboarding-dot.active {
+  background: var(--k-500);
+}
+
+.onboarding-dot.completed {
+  background: var(--k-300);
+}
+
+.onboarding-content {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.onboarding-icon-wrap {
+  width: 72px;
+  height: 72px;
+  background: var(--k-50);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  border: 1px solid var(--k-100);
+}
+
+.onboarding-content h2 {
+  font-size: 1.5rem;
+  color: var(--k-900);
+  margin-bottom: 0.75rem;
+}
+
+.onboarding-content p {
+  color: var(--grey-600);
+  line-height: 1.6;
+}
+
+.onboarding-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

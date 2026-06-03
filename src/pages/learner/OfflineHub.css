@@ -1,0 +1,136 @@
+.offline-hub-wrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.offline-header-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  background: var(--k-50);
+  border: 1px solid var(--k-200);
+}
+
+.offline-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.wifi-icon-wrap {
+  width: 52px;
+  height: 52px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.offline-header-left h3 {
+  color: var(--k-900);
+  margin-bottom: 0.5rem;
+}
+
+.offline-header-left p {
+  color: var(--grey-700);
+  line-height: 1.5;
+  font-size: .95rem;
+}
+
+.offline-storage {
+  width: 280px;
+  background: var(--white);
+  padding: 1rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--grey-200);
+  flex-shrink: 0;
+}
+
+.download-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.download-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  padding: 1.25rem 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.download-card-text {
+  min-width: 0;
+}
+
+.download-card-text h4 {
+  word-break: break-word;
+}
+
+.download-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.download-card-info {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.download-card-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--k-50);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--k-100);
+}
+
+.download-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .offline-header-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .offline-storage {
+    width: 100%;
+  }
+
+  .download-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .download-card-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

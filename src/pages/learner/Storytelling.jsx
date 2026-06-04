@@ -6,6 +6,8 @@ import { uploadFile } from '../../api/learnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
 import { resolveAssetUrl } from '../../utils/assetUrl';
 import { showSuccess, showError, showWarning, apiErrorMessage } from '../../utils/swal';
+import { runGamificationEvent } from '../../utils/gamificationRunner';
+import { celebrateStory } from '../../utils/celebrate';
 import './Storytelling.css';
 
 function storyPreviewKind(format, fileUrl) {
@@ -123,7 +125,8 @@ export default function Storytelling() {
     try {
       const res = await submitStory(buildPayload('pending'));
       setMyStory(res.data);
-      showSuccess('Story submitted!', 'Your story is pending review.');
+      celebrateStory();
+      runGamificationEvent('story_submit');
     } catch (err) {
       showError('Submission failed', apiErrorMessage(err, 'Failed to submit story.'));
     } finally {

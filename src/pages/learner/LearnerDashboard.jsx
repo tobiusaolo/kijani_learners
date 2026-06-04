@@ -4,11 +4,22 @@ import { BookOpen, Award, TrendingUp, Clock, ArrowRight, CheckCircle, Lock, Play
 import LearnerLayout from '../../components/LearnerLayout';
 import BalanceRing from '../../components/BalanceRing';
 import OnboardingOverlay from '../../components/OnboardingOverlay';
+import JourneyRail from '../../components/gamification/JourneyRail';
+import MissionCard from '../../components/gamification/MissionCard';
+import PhaseBadge from '../../components/gamification/PhaseBadge';
+import BadgeShelf from '../../components/gamification/BadgeShelf';
+import { useBadges } from '../../hooks/useBadges';
 import { getModules, getWebinars } from '../../api/cachedLearnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
+import { isOnboardingDone, setOnboardingDone } from '../../utils/onboardingStorage';
 import CacheStatus from '../../components/CacheStatus';
 import { useAuth } from '../../contexts/AuthContext';
 import { getDisplayName } from '../../utils/profileDisplay';
+import { useLearnerAvatar } from '../../hooks/useLearnerAvatar';
+import { useGamification } from '../../hooks/useGamification';
+import LearnerAvatar from '../../components/LearnerAvatar';
+import DashboardScene from '../../components/avatars/DashboardScene';
+import '../../components/gamification/gamification.css';
 import './LearnerDashboard.css';
 
 const MODULE_EMOJIS = {
@@ -16,7 +27,7 @@ const MODULE_EMOJIS = {
 };
 
 export default function LearnerDashboard() {
-  const [showOnboarding, setShowOnboarding] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(() => !isOnboardingDone());
   const mapModules = (list) =>
     (list || []).map((m) => ({
       ...m,
@@ -30,6 +41,9 @@ export default function LearnerDashboard() {
   const [loading, setLoading] = useState(() => showPageLoading('modules:list', 'modules'));
   const [revalidating, setRevalidating] = useState(false);
   const { user, profile } = useAuth();
+  const { avatarId, avatarMeta } = useLearnerAvatar();
+  const { journeyNodes, phase, mission, mastery } = useGamification(modules);
+  const { unlockedIds } = useBadges();
 
   const pickNextWebinar = (list) => {
     const now = new Date();
@@ -65,6 +79,16 @@ export default function LearnerDashboard() {
   const displayName = getDisplayName(profile, user);
   const firstName = profile?.firstName || (user?.email ? user.email.split('@')[0] : 'Learner');
 
+  const avgQuizDisplay = mastery.avgQuiz != null ? `${mastery.avgQuiz}%` : '—';
+  const avgQuizSub = mastery.quizCount > 0 ? `Across ${mastery.quizCount} quizzes` : 'Complete a quiz to track';
+  const timeDisplay = mastery.totalMinutes > 0 ? `${mastery.totalMinutes} min` : '—';
+  const timeSub = mastery.totalMinutes > 0 ? 'On this device' : 'Time adds as you learn';
+
+  const finishOnboarding = () => {
+    setOnboardingDone();
+    setShowOnboarding(false);
+  };
+
   if (loading) {
     return (
       <LearnerLayout title="My Dashboard" subtitle={`Welcome back, ${displayName} 👋`}>
@@ -79,15 +103,36 @@ export default function LearnerDashboard() {
   return (
     <LearnerLayout title="My Dashboard" subtitle={`Welcome back, ${firstName} 👋`}>
       <CacheStatus revalidating={revalidating} />
-      {showOnboarding && <OnboardingOverlay onComplete={() => setShowOnboarding(false)} />}
+      {showOnboarding && <OnboardingOverlay onComplete={finishOnboarding} />}
+
+      <section className="dash-welcome-band card">
+        <div className="dash-welcome-scene">
+          <DashboardScene />
+        </div>
+        <div className="dash-welcome-body">
+          <LearnerAvatar avatarId={avatarId} size="lg" showRing />
+          <div>
+            <p className="dash-welcome-eyebrow">Your Terrascape journey</p>
+            <h3 className="dash-welcome-title">Welcome back, {firstName}</h3>
+            <p className="dash-welcome-sub">
+              <PhaseBadge phase={phase} /> · exploring as <strong>{avatarMeta.label}</strong>
+            </p>
+            <Link to="/learn/profile" className="btn btn-outline btn-sm" style={{ marginTop: '0.75rem' }}>
+              Change character
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <JourneyRail nodes={journeyNodes} />
+
       <div className="dashboard-grid">
 
-        {/* ── Top Stats ── */}
         <div className="dash-stats-row">
           {[
             { icon: TrendingUp, label: 'Overall Progress', value: `${overall}%`, sub: `${completedModules} of ${modules.length} modules done`, color: 'var(--k-500)' },
-            { icon: Star,       label: 'Avg Quiz Score',   value: '—', sub: 'Coming soon', color: '#f59e0b' },
-            { icon: Clock,      label: 'Time Invested',    value: '— min', sub: 'Tracking coming soon', color: 'var(--info)' },
+            { icon: Star,       label: 'Quiz Strength',   value: avgQuizDisplay, sub: avgQuizSub, color: '#f59e0b' },
+            { icon: Clock,      label: 'Time Invested',    value: timeDisplay, sub: timeSub, color: 'var(--info)' },
             { icon: Target,     label: 'Current Module',   value: activeModule ? `Module ${activeModule.id}` : 'All done!', sub: activeModule?.title || 'Congratulations', color: 'var(--k-400)' },
           ].map((s, i) => (
             <div key={i} className="dash-stat-card">
@@ -103,10 +148,9 @@ export default function LearnerDashboard() {
           ))}
         </div>
 
-        {/* ── Main Left ── */}
         <div className="dash-left">
+          <MissionCard mission={mission} />
 
-          {/* Journey Progress */}
           <div className="card">
             <div className="dash-card-header">
               <h4>Journey Progress</h4>
@@ -150,14 +194,12 @@ export default function LearnerDashboard() {
             )}
           </div>
 
-          <BalanceRing progress={overall} />
-
+          <BalanceRing progress={overall} modules={modules} />
         </div>
 
-        {/* ── Right Sidebar ── */}
         <div className="dash-right">
+          <BadgeShelf unlockedIds={unlockedIds} />
 
-          {/* Next Up */}
           {activeModule && (
             <div className="card card-green dash-next-card">
               <div style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.08em', color: 'rgba(255,255,255,.6)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Next Up</div>
@@ -173,7 +215,6 @@ export default function LearnerDashboard() {
             </div>
           )}
 
-          {/* Upcoming Webinar */}
           <div className="card" style={{ marginTop: '1.25rem' }}>
             <div className="dash-card-header">
               <h4>Upcoming Webinar</h4>
@@ -206,7 +247,6 @@ export default function LearnerDashboard() {
             )}
           </div>
 
-          {/* Quick Links */}
           <div className="card" style={{ marginTop: '1.25rem' }}>
             <h4 style={{ marginBottom: '1rem' }}>Quick Actions</h4>
             <div className="quick-links">

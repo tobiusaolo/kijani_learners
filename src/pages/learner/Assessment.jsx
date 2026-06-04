@@ -10,6 +10,8 @@ import {
 } from '../../api/cachedLearnerApi';
 import { cachedData, assessmentsPageLoading } from '../../utils/staleLoad';
 import { showError, apiErrorMessage } from '../../utils/swal';
+import { runGamificationEvent } from '../../utils/gamificationRunner';
+import GrowthChart from '../../components/gamification/GrowthChart';
 
 function applyAssessmentData(instrument, myList, assessmentType, setters) {
   const done = (myList || []).some((a) => a.type === assessmentType);
@@ -40,6 +42,7 @@ export default function Assessment() {
   const [alreadyDone, setAlreadyDone] = useState(() =>
     (cachedMy || []).some((a) => a.type === assessmentType),
   );
+  const [myAssessments, setMyAssessments] = useState(() => cachedMy || []);
 
   useEffect(() => {
     const hasCache = cachedData(instrumentKey, 'assessments') || cachedData('assessments:my', 'assessments');
@@ -50,9 +53,11 @@ export default function Assessment() {
       getMyAssessments(),
     ])
       .then(([instrumentRes, myRes]) => {
+        const myList = unwrapResponse(myRes) || [];
+        setMyAssessments(myList);
         applyAssessmentData(
           unwrapResponse(instrumentRes),
-          unwrapResponse(myRes),
+          myList,
           assessmentType,
           { setAlreadyDone, setQuestions },
         );
@@ -71,6 +76,8 @@ export default function Assessment() {
       const { data } = await submitAssessment(assessmentType, payload);
       setScore(data.systems_thinking_score);
       setSubmitted(true);
+      setMyAssessments((prev) => [...prev.filter((a) => a.type !== assessmentType), { type: assessmentType, ...data }]);
+      runGamificationEvent(assessmentType === 'baseline' ? 'baseline_done' : 'endline_done');
     } catch (err) {
       console.error('Failed to submit assessment', err);
       showError('Submission failed', apiErrorMessage(err, 'Failed to submit assessment.'));
@@ -180,6 +187,9 @@ export default function Assessment() {
             <p className="text-muted" style={{ marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
               Thank you. Your responses have been securely saved.
             </p>
+            <div className="card" style={{ maxWidth: 420, margin: '0 auto 2rem', padding: '1.5rem' }}>
+              <GrowthChart assessments={myAssessments} />
+            </div>
             <Link to={isEndline ? '/learn/certificate' : '/learn/dashboard'} className="btn btn-primary btn-lg">
               {isEndline ? 'View Certificate' : 'Go to Dashboard'}
             </Link>

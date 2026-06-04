@@ -8,6 +8,10 @@ import {
 } from '../api/cachedLearnerApi';
 import { cachedData, quizPageLoading } from '../utils/staleLoad';
 import { showError, apiErrorMessage } from '../utils/swal';
+import { recordQuizScore } from '../utils/masteryStorage';
+import { runGamificationEvent } from '../utils/gamificationRunner';
+import { celebrateQuizPass } from '../utils/celebrate';
+import MasteryChip, { masteryFromQuiz } from './gamification/MasteryChip';
 
 /**
  * Learner quiz UI — shows a compact score summary when already attempted;
@@ -90,8 +94,14 @@ export default function QuizTaker({ quizId, onComplete }) {
       setResult(data);
       setLatestAttempt(data);
       setRetaking(false);
+      if (data.score != null) recordQuizScore(quizId, data.score);
       if (data.passed) {
         notifiedPassRef.current = true;
+        celebrateQuizPass(data.score);
+        runGamificationEvent('quiz_pass', {
+          quizScore: data.score,
+          quizAttemptNumber: data.attempt_number,
+        });
         onComplete?.(data);
       }
     } catch (err) {
@@ -131,10 +141,14 @@ export default function QuizTaker({ quizId, onComplete }) {
     const correct = summaryAttempt.correct_count;
     const total = summaryAttempt.total_questions ?? questions.length;
     const showBreakdown = correct != null && total > 0;
+    const mastery = masteryFromQuiz(score, passed);
 
     return (
       <div className="module-quiz-wrap quiz-compact-summary">
         <h3 className="quiz-compact-title">{quiz.title}</h3>
+        <div style={{ marginBottom: '0.5rem' }}>
+          <MasteryChip label={mastery.label} variant={mastery.variant} />
+        </div>
         <div className={`quiz-compact-score-row ${passed ? 'pass' : 'fail'}`}>
           {passed ? <CheckCircle size={28} /> : <XCircle size={28} />}
           <div>

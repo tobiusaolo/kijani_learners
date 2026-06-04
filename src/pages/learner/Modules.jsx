@@ -44,7 +44,7 @@ export default function Modules() {
       ) : (
         <div className="modules-page-grid">
           {modules.map(m => (
-            <div key={m.id} className={`module-grid-card ${m.status}`}>
+            <div key={m.id} className={`module-grid-card ${m.status} ${m.status === 'completed' ? 'mg-complete-glow' : ''}`}>
               <div className="mg-card-top" style={{ borderTopColor: m.color }}>
                 <div className="mg-header">
                   <span className="mg-num" style={{ color: m.color }}>MODULE {m.num}</span>

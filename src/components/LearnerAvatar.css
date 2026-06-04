@@ -1,0 +1,28 @@
+.learner-avatar {
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--k-50);
+  box-shadow: var(--shadow-xs);
+}
+
+.learner-avatar svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.learner-avatar--ring {
+  box-shadow:
+    0 0 0 3px var(--white),
+    0 0 0 5px var(--k-200);
+}
+
+.learner-sidebar .learner-avatar--sm,
+.sidebar-profile-avatar.learner-avatar--sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.topbar-avatar-wrap .learner-avatar {
+  box-shadow: var(--shadow-sm);
+}

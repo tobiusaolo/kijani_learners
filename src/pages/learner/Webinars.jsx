@@ -4,6 +4,7 @@ import LearnerLayout from '../../components/LearnerLayout';
 import { getWebinars, rsvpWebinar } from '../../api/cachedLearnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
 import { showError, apiErrorMessage } from '../../utils/swal';
+import { runGamificationEvent } from '../../utils/gamificationRunner';
 import './Webinars.css';
 
 export default function Webinars() {
@@ -24,6 +25,7 @@ export default function Webinars() {
       await rsvpWebinar(id);
       const res = await getWebinars();
       setWebinars(res.data || []);
+      runGamificationEvent('webinar_rsvp', { hasRsvp: true });
     } catch (err) {
       showError('RSVP failed', apiErrorMessage(err, 'Could not RSVP.'));
     } finally {

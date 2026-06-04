@@ -14,41 +14,26 @@
 }
 
 .profile-avatar-large {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--k-400), var(--k-600));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--white);
   margin-bottom: var(--sp-4);
-  position: relative;
-}
-
-.avatar-edit-btn {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--white);
-  border: 1px solid var(--grey-200);
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: var(--grey-600);
-  cursor: pointer;
-  box-shadow: var(--shadow-xs);
-  transition: all var(--t-fast);
 }
 
-.avatar-edit-btn:hover {
-  color: var(--k-500);
-  border-color: var(--k-300);
+.profile-avatar-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--k-600);
+  margin-bottom: var(--sp-5);
+  margin-top: -0.25rem;
+}
+
+.profile-section-title {
+  margin-bottom: 1.5rem;
+  color: var(--k-800);
+}
+
+.profile-avatar-card {
+  padding: var(--sp-6);
 }
 
 .profile-card-main h3 {

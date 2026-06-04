@@ -1,15 +1,28 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, MapPin, Briefcase, Camera, Loader } from 'lucide-react';
+import { Mail, MapPin, Briefcase, Loader } from 'lucide-react';
 import LearnerLayout from '../../components/LearnerLayout';
 import { fetchCached, updateProfile, learnerApi } from '../../api/cachedLearnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
 import { profileFromApi, getRoleLine } from '../../utils/profileDisplay';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLearnerAvatar } from '../../hooks/useLearnerAvatar';
+import LearnerAvatar from '../../components/LearnerAvatar';
+import AvatarPicker from '../../components/AvatarPicker';
+import BadgeGrid from '../../components/gamification/BadgeGrid';
+import PhaseBadge from '../../components/gamification/PhaseBadge';
+import { useBadges } from '../../hooks/useBadges';
+import { BADGE_CATALOG } from '../../data/badgeCatalog';
+import GrowthChart from '../../components/gamification/GrowthChart';
+import { useGamification } from '../../hooks/useGamification';
+import '../../components/gamification/gamification.css';
 import { showSuccess, showError } from '../../utils/swal';
 import './LearnerProfile.css';
 
 export default function LearnerProfile() {
   const { refreshProfile } = useAuth();
+  const { avatarId, avatarMeta } = useLearnerAvatar();
+  const { unlockedIds } = useBadges();
+  const { phase, assessments } = useGamification([]);
   const [loading, setLoading] = useState(() => showPageLoading('profile:me', 'profile'));
   const [saving, setSaving] = useState(false);
 
@@ -49,8 +62,6 @@ export default function LearnerProfile() {
     }
   };
 
-  const initials = `${profile.firstName?.charAt(0) || ''}${profile.lastName?.charAt(0) || ''}`.toUpperCase() || 'U';
-
   return (
     <LearnerLayout title="My Profile" subtitle="Manage your account and preferences">
       <div className="profile-layout">
@@ -58,13 +69,12 @@ export default function LearnerProfile() {
         <div className="profile-left">
           <div className="card profile-card-main">
             <div className="profile-avatar-large">
-              {initials}
-              <button className="avatar-edit-btn">
-                <Camera size={14} />
-              </button>
+              <LearnerAvatar avatarId={avatarId} size="xl" showRing />
             </div>
             <h3>{profile.firstName} {profile.lastName}</h3>
             <p className="profile-role text-muted">{getRoleLine(profile)}</p>
+            <PhaseBadge phase={phase} />
+            <p className="profile-avatar-tag">{avatarMeta.label}</p>
             
             <div className="profile-info-list">
               <div className="profile-info-item">
@@ -84,8 +94,13 @@ export default function LearnerProfile() {
         </div>
 
         <div className="profile-main">
-          <div className="card">
-            <h4 style={{ marginBottom: '1.5rem', color: 'var(--k-800)' }}>Edit Profile</h4>
+          <div className="card profile-avatar-card">
+            <h4 className="profile-section-title">Your Terrascape Character</h4>
+            <AvatarPicker />
+          </div>
+
+          <div className="card" style={{ marginTop: '1.5rem' }}>
+            <h4 className="profile-section-title">Edit Profile</h4>
             
             {loading ? (
               <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -160,6 +175,19 @@ export default function LearnerProfile() {
             )}
           </div>
           
+          <div className="card profile-avatar-card" style={{ marginTop: '1.5rem' }}>
+            <h4 className="profile-section-title">Achievements</h4>
+            <p className="text-sm text-muted" style={{ marginBottom: '1rem' }}>
+              {unlockedIds.length} of {BADGE_CATALOG.length} badges earned on this device.
+            </p>
+            <BadgeGrid unlockedIds={unlockedIds} />
+          </div>
+
+          <div className="card" style={{ marginTop: '1.5rem', padding: 'var(--sp-6)' }}>
+            <h4 className="profile-section-title">Systems thinking growth</h4>
+            <GrowthChart assessments={assessments} />
+          </div>
+
           <div className="card" style={{ marginTop: '1.5rem' }}>
             <h4 style={{ marginBottom: '1.5rem', color: 'var(--k-800)' }}>Security</h4>
             <div className="form-group" style={{ marginBottom: '1rem' }}>

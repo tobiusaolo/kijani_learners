@@ -7,6 +7,8 @@ import { getCertificate } from '../../api/cachedLearnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
 import apiClient from '../../api/client';
 import { showError, showWarning, apiErrorMessage } from '../../utils/swal';
+import { runGamificationEvent } from '../../utils/gamificationRunner';
+import { celebrateGraduate } from '../../utils/celebrate';
 import './Certificate.css';
 
 export default function Certificate() {
@@ -70,6 +72,8 @@ export default function Certificate() {
       a.download = `kijani_certificate_${certData?.credential_id || 'completion'}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
+      celebrateGraduate();
+      runGamificationEvent('cert_download');
     } catch (err) {
       showError('Download failed', apiErrorMessage(err, 'Could not download certificate.'));
     } finally {

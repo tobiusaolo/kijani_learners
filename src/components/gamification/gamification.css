@@ -1,0 +1,454 @@
+/* ── Journey rail ── */
+.journey-rail {
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-5);
+  position: relative;
+  overflow: hidden;
+}
+
+.journey-rail-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-5);
+  gap: var(--sp-3);
+}
+
+.journey-rail-header h4 {
+  color: var(--k-800);
+  margin: 0;
+}
+
+.journey-rail-track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-1);
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.journey-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 44px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--t-fast);
+}
+
+.journey-node:not([aria-disabled='true']):hover {
+  transform: translateY(-2px);
+}
+
+.journey-node-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border: 2px solid var(--grey-200);
+  background: var(--white);
+  color: var(--grey-500);
+  transition: all var(--t-fast);
+}
+
+.journey-node--done .journey-node-dot {
+  background: var(--k-500);
+  border-color: var(--k-500);
+  color: var(--white);
+  box-shadow: 0 0 0 4px var(--k-100);
+}
+
+.journey-node--current .journey-node-dot {
+  background: var(--k-100);
+  border-color: var(--k-500);
+  color: var(--k-700);
+  box-shadow: 0 0 0 4px rgba(46, 139, 87, 0.2);
+  animation: journey-pulse 2s ease-in-out infinite;
+}
+
+.journey-node--locked .journey-node-dot {
+  background: var(--grey-100);
+  opacity: 0.7;
+}
+
+.journey-node--upcoming .journey-node-dot {
+  border-color: var(--grey-300);
+}
+
+.journey-node-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--grey-600);
+  text-align: center;
+}
+
+.journey-node--current .journey-node-label {
+  color: var(--k-700);
+}
+
+.journey-node--done .journey-node-label {
+  color: var(--k-600);
+}
+
+@keyframes journey-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(46, 139, 87, 0.15); }
+  50% { box-shadow: 0 0 0 8px rgba(46, 139, 87, 0.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-node--current .journey-node-dot {
+    animation: none;
+  }
+}
+
+/* ── Phase badge ── */
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  background: linear-gradient(135deg, var(--k-100), var(--k-50));
+  border: 1px solid var(--k-200);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--k-700);
+  letter-spacing: 0.02em;
+}
+
+.phase-badge--compact {
+  font-size: 0.68rem;
+  padding: 3px 8px;
+}
+
+.phase-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--k-500);
+}
+
+.sidebar-phase {
+  margin-top: 4px;
+}
+
+/* ── Mission card ── */
+.mission-card {
+  padding: var(--sp-5);
+  border: 1px solid var(--k-100);
+  background: linear-gradient(180deg, var(--white) 0%, var(--k-50) 100%);
+}
+
+.mission-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--k-600);
+  margin-bottom: var(--sp-4);
+}
+
+.mission-card-body {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: flex-start;
+  margin-bottom: var(--sp-4);
+}
+
+.mission-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.mission-title {
+  margin: 0 0 4px;
+  color: var(--k-800);
+  font-size: 1.05rem;
+}
+
+.mission-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--grey-600);
+  line-height: 1.5;
+}
+
+.mission-cta {
+  width: 100%;
+}
+
+/* ── Mastery chips ── */
+.mastery-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.mastery-chip--sm {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+}
+
+.mastery-chip--pass {
+  background: var(--k-100);
+  color: var(--k-700);
+}
+
+.mastery-chip--strong {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.mastery-chip--perfect {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.mastery-chip--fail {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ── Badge shelf & grid ── */
+.badge-shelf {
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-5);
+}
+
+.badge-shelf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-4);
+}
+
+.badge-shelf-header h4 {
+  margin: 0;
+  color: var(--k-800);
+}
+
+.badge-shelf-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.badge-shelf-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 72px;
+  padding: var(--sp-2);
+  background: var(--k-50);
+  border-radius: var(--r-md);
+  border: 1px solid var(--k-100);
+}
+
+.badge-shelf-emoji {
+  font-size: 1.5rem;
+}
+
+.badge-shelf-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--k-700);
+  text-align: center;
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--sp-3);
+}
+
+.badge-grid-item {
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--grey-200);
+  text-align: center;
+  background: var(--grey-50);
+  opacity: 0.65;
+}
+
+.badge-grid-item.earned {
+  opacity: 1;
+  background: var(--k-50);
+  border-color: var(--k-200);
+  box-shadow: var(--shadow-xs);
+}
+
+.badge-grid-emoji {
+  font-size: 1.75rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.badge-grid-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--k-800);
+}
+
+.badge-grid-desc {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--grey-500);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.mg-complete-glow {
+  box-shadow: 0 0 0 2px var(--k-200), var(--shadow-sm);
+}
+
+/* ── Growth chart ── */
+.growth-chart {
+  padding: var(--sp-4) 0;
+}
+
+.growth-bars {
+  display: flex;
+  gap: var(--sp-8);
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 160px;
+}
+
+.growth-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 80px;
+}
+
+.growth-bar-track {
+  width: 48px;
+  height: 120px;
+  background: var(--grey-100);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.growth-bar-fill {
+  width: 100%;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  min-height: 4px;
+  transition: height var(--t-slow);
+}
+
+.growth-bar-fill.baseline {
+  background: linear-gradient(180deg, var(--k-400), var(--k-600));
+}
+
+.growth-bar-fill.endline {
+  background: linear-gradient(180deg, #60a5fa, #2563eb);
+}
+
+.growth-bar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--grey-600);
+}
+
+.growth-bar-value {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--k-800);
+}
+
+.growth-delta {
+  text-align: center;
+  margin-top: var(--sp-4);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--grey-600);
+}
+
+.growth-delta.positive {
+  color: var(--k-600);
+}
+
+/* ── Notifications ── */
+.notif-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.notif-panel {
+  position: fixed;
+  top: 72px;
+  right: var(--sp-4);
+  width: min(360px, calc(100vw - 2rem));
+  max-height: 420px;
+  overflow-y: auto;
+  z-index: var(--z-modal);
+  padding: 0;
+  box-shadow: var(--shadow-lg);
+}
+
+.notif-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--grey-100);
+}
+
+.notif-panel-header h4 {
+  margin: 0;
+  color: var(--k-800);
+}
+
+.notif-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notif-item {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--grey-50);
+}
+
+.notif-item strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--k-800);
+}
+
+.notif-item p {
+  margin: 2px 0;
+  font-size: 0.8rem;
+  color: var(--grey-600);
+}
+
+.notif-item time {
+  font-size: 0.68rem;
+  color: var(--grey-400);
+}
+
+.notif-emoji {
+  font-size: 1.25rem;
+}

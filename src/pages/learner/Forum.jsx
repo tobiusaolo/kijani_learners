@@ -10,6 +10,10 @@ import {
 } from '../../api/cachedLearnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
 import { useAuth } from '../../contexts/AuthContext';
+import LearnerAvatar from '../../components/LearnerAvatar';
+import { useLearnerAvatar } from '../../hooks/useLearnerAvatar';
+import { runGamificationEvent } from '../../utils/gamificationRunner';
+import { incrementForumReplies, getForumReplyCount } from '../../utils/forumStats';
 import { showError } from '../../utils/swal';
 import './Forum.css';
 
@@ -29,7 +33,14 @@ export default function Forum() {
   const [loadingReplies, setLoadingReplies] = useState(null);
   const [reactingPostId, setReactingPostId] = useState(null);
 
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
+  const { avatarId } = useLearnerAvatar();
+
+  const isMyPost = (post) => {
+    if (user?.email && post.author_email) return post.author_email === user.email;
+    const name = `${profile?.firstName || ''} ${profile?.lastName || ''}`.trim();
+    return name && post.author_name === name;
+  };
 
   const forumCacheKey = (modId) => `forum:posts:${modId || 'all'}`;
 
@@ -72,6 +83,7 @@ export default function Forum() {
       setShowNewPost(false);
       setNewPost({ title: '', content: '', module_id: '' });
       fetchPosts();
+      runGamificationEvent('forum_post');
     } catch (err) {
       console.error('Failed to submit post', err);
       showError('Could not post', 'Failed to submit post.');
@@ -104,7 +116,14 @@ export default function Forum() {
     setReactingPostId(postId);
     try {
       const res = await reactToForumPost(postId, reaction);
-      setPosts(prev => prev.map(p => (p.id === postId ? { ...p, ...res.data } : p)));
+      const updated = res.data;
+      setPosts((prev) => {
+        const next = prev.map((p) => (p.id === postId ? { ...p, ...updated } : p));
+        if ((updated?.likes_count || 0) >= 5) {
+          runGamificationEvent('forum_reaction', { forumPosts: next });
+        }
+        return next;
+      });
     } catch (err) {
       console.error('Failed to react to post', err);
       showError('Could not update vote', 'Please try again.');
@@ -123,6 +142,8 @@ export default function Forum() {
       setReplies(prev => ({ ...prev, [postId]: res.data || [] }));
       setReplyText(prev => ({ ...prev, [postId]: '' }));
       fetchPosts();
+      const count = incrementForumReplies();
+      runGamificationEvent('forum_reply', { forumReplies: count });
     } catch (err) {
       console.error('Failed to post reply', err);
       showError('Could not reply', 'Failed to post reply.');
@@ -236,9 +257,13 @@ export default function Forum() {
                 <div key={post.id} className={`forum-post-card ${post.is_pinned ? 'pinned' : ''}`}>
                   <div className="post-header">
                     <div className="post-author-info">
-                      <div className="post-avatar" style={{ background: 'linear-gradient(135deg, var(--k-500), var(--k-300))' }}>
-                        {getInitials(post.user_id)}
-                      </div>
+                      {isMyPost(post) ? (
+                        <LearnerAvatar avatarId={avatarId} size="sm" />
+                      ) : (
+                        <div className="post-avatar" style={{ background: 'linear-gradient(135deg, var(--k-500), var(--k-300))' }}>
+                          {getInitials(post.user_id)}
+                        </div>
+                      )}
                       <div>
                         <div className="post-author-name">{post.author_name || post.user_id}</div>
                         <div className="post-meta">

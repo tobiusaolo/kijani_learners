@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, ArrowLeft, Check, Leaf, BookOpen, MessageSquare, Download } from 'lucide-react';
+import { setOnboardingDone } from '../utils/onboardingStorage';
 import './OnboardingOverlay.css';
 
 const steps = [
@@ -32,6 +33,7 @@ export default function OnboardingOverlay({ onComplete }) {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
+      setOnboardingDone();
       onComplete();
     }
   };
@@ -62,7 +64,12 @@ export default function OnboardingOverlay({ onComplete }) {
         <div className="onboarding-actions">
           <button 
             className="btn btn-ghost" 
-            onClick={currentStep === 0 ? onComplete : prevStep}
+            onClick={() => {
+              if (currentStep === 0) {
+                setOnboardingDone();
+                onComplete();
+              } else prevStep();
+            }}
           >
             {currentStep === 0 ? "Skip Tour" : <><ArrowLeft size={16} style={{ marginRight: 4 }} /> Back</>}
           </button>

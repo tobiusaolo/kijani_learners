@@ -4,6 +4,10 @@
   gap: var(--sp-6);
 }
 
+.module-grid-card.mg-complete-glow {
+  border-color: var(--k-300);
+}
+
 .module-grid-card {
   background: var(--white);
   border-radius: var(--r-lg);

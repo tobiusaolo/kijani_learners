@@ -65,11 +65,7 @@ export default function Landing() {
           <div className="hero-grid" />
         </div>
         <div className="container">
-          <div className="hero-badge animate-fade-up">
-            <span className="hero-badge-dot" />
-            Cohort 1 Applications Open · 50 Spots Remaining
-          </div>
-          <h1 className="hero-headline animate-fade-up delay-100">
+          <h1 className="hero-headline animate-fade-up">
             Where African Youth<br />
             <span className="hero-headline-green">Shape Conservation</span><br />
             Futures

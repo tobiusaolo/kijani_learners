@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
   BookOpen, Play, CheckCircle, Edit3, MessageSquare, Download,
@@ -15,8 +15,12 @@ import {
 import { recordActivity } from '../../api/learnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
 import QuizTaker from '../../components/QuizTaker';
+import InteractiveScenario from '../../components/InteractiveScenario';
 import { resolveAssetUrl } from '../../utils/assetUrl';
 import { showError } from '../../utils/swal';
+import { recordActivitySeconds } from '../../utils/masteryStorage';
+import { runGamificationEvent } from '../../utils/gamificationRunner';
+import { celebrateModuleComplete } from '../../utils/celebrate';
 import './ModuleDetail.css';
 
 function renderEssayContent(content) {
@@ -173,11 +177,32 @@ export default function ModuleDetail() {
 
   useEffect(() => {
     if (locked || loading) return undefined;
-    const tick = () => recordActivity(moduleNum, 30).catch(() => {});
+    const tick = () => {
+      recordActivitySeconds(30);
+      recordActivity(moduleNum, 30).catch(() => {});
+    };
     tick();
     const interval = setInterval(tick, 30000);
     return () => clearInterval(interval);
   }, [moduleNum, locked, loading]);
+
+  const openedRef = useRef(false);
+  const completedRef = useRef(false);
+
+  useEffect(() => {
+    if (!moduleData || locked || openedRef.current) return;
+    openedRef.current = true;
+    runGamificationEvent('module_open');
+  }, [moduleData, locked]);
+
+  useEffect(() => {
+    if (!moduleData || completedRef.current) return;
+    if (moduleData.progress_pct >= 100 || moduleData.status === 'completed') {
+      completedRef.current = true;
+      celebrateModuleComplete(moduleData.title);
+      runGamificationEvent('module_complete');
+    }
+  }, [moduleData?.progress_pct, moduleData?.status, moduleData?.title]);
 
   useEffect(() => {
     if (currentStep?.type !== 'discussion') return;
@@ -193,6 +218,7 @@ export default function ModuleDetail() {
     try {
       await updateProgress(moduleNum, { intro_video_done: true });
       setModuleData((prev) => (prev ? { ...prev, intro_video_done: true } : prev));
+      runGamificationEvent('intro_video');
       return true;
     } catch (err) {
       console.error('Failed to update video progress', err);
@@ -236,6 +262,7 @@ export default function ModuleDetail() {
       await saveReflection(moduleNum, reflection);
       setReflectionSaved(true);
       await reloadModule();
+      runGamificationEvent('reflection');
       if (advance) goNext();
     } catch (err) {
       console.error('Failed to save reflection', err);
@@ -257,6 +284,7 @@ export default function ModuleDetail() {
       setNewDiscussion('');
       const res = await getForumPosts(moduleNum);
       setDiscussions(res.data || []);
+      runGamificationEvent('forum_post');
     } catch (err) {
       showError('Could not post', 'Failed to post discussion.');
     } finally {
@@ -296,6 +324,12 @@ export default function ModuleDetail() {
   const reflectionPrompt =
     moduleData?.description ||
     `Reflect on what you learned in ${moduleData?.title || 'this module'}.`;
+
+  const discussionPrompts = [
+    'What idea from this module will you apply in your community?',
+    'Which reading or video changed how you see conservation?',
+    'What question do you still want to explore with peers?',
+  ];
 
   return (
     <LearnerLayout
@@ -463,6 +497,15 @@ export default function ModuleDetail() {
                 </div>
               </div>
 
+              {moduleNum === '2' && currentStep.topicIndex === 0 && (
+                <div className="module-scenario-block" style={{ marginTop: '1.5rem' }}>
+                  <p className="text-xs text-muted" style={{ marginBottom: '0.75rem' }}>
+                    Optional field decision — explore trade-offs (does not affect your grade).
+                  </p>
+                  <InteractiveScenario />
+                </div>
+              )}
+
               {activeTopic.resources?.length > 0 && (
                 <div className="module-materials-section">
                   <h3 className="module-section-title">
@@ -582,43 +625,111 @@ export default function ModuleDetail() {
               <header className="module-step-header">
                 <span className="module-step-kicker">Step {stepIndex + 1}</span>
                 <h2>Module discussion</h2>
+                <p className="text-muted module-step-lead">
+                  Connect with learners working through {moduleData?.title || `Module ${moduleNum}`}.
+                  Your post appears in this module&apos;s forum thread.
+                </p>
               </header>
-              <div className="new-post-card">
-                <textarea
-                  className="form-input"
-                  style={{ minHeight: '80px' }}
-                  placeholder={`Share your thoughts about Module ${moduleNum}…`}
-                  value={newDiscussion}
-                  onChange={(e) => setNewDiscussion(e.target.value)}
-                  disabled={postingDiscussion}
-                />
-                <button
-                  type="button"
-                  className="btn btn-primary btn-sm"
-                  style={{ marginTop: '0.5rem' }}
-                  onClick={handlePostDiscussion}
-                  disabled={postingDiscussion || !newDiscussion.trim()}
-                >
-                  {postingDiscussion ? 'Posting…' : 'Post'}
-                </button>
-              </div>
-              <div className="discussion-list">
-                {forumLoading ? (
-                  <div className="module-loading-state">
-                    <Loader size={24} className="spin" />
+
+              <div className="module-discussion-wrap">
+                <div className="discussion-prompt-card">
+                  <div className="discussion-prompt-icon" aria-hidden>
+                    <MessageSquare size={22} />
                   </div>
-                ) : discussions.length === 0 ? (
-                  <div className="module-empty-inline">No discussions yet. Be the first!</div>
-                ) : (
-                  discussions.map((d, i) => (
-                    <div key={d.id || i} className="discussion-post">
-                      <div className="forum-author-avatar">{getInitials(d.user_id)}</div>
-                      <div className="discussion-post-body">
-                        <p>{d.content}</p>
+                  <div>
+                    <h4>What to share</h4>
+                    <p>
+                      Add a short reflection or question tied to this module—not a general comment.
+                      Peers and facilitators can respond in the thread below.
+                    </p>
+                    <ul className="discussion-prompt-list">
+                      {discussionPrompts.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="discussion-compose-card">
+                  <label className="form-label" htmlFor="module-discussion-input">
+                    Your post
+                  </label>
+                  <p className="discussion-compose-hint">
+                    Write clearly; aim for a few sentences or a short paragraph.
+                  </p>
+                  <textarea
+                    id="module-discussion-input"
+                    className="form-input discussion-compose-input"
+                    placeholder="Example: The community governance section made me rethink how we involve youth in wetland restoration near my town…"
+                    value={newDiscussion}
+                    onChange={(e) => setNewDiscussion(e.target.value)}
+                    disabled={postingDiscussion}
+                    rows={5}
+                  />
+                  <div className="discussion-compose-footer">
+                    <span className="discussion-char-count">
+                      {newDiscussion.trim().split(/\s+/).filter(Boolean).length} words
+                    </span>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handlePostDiscussion}
+                      disabled={postingDiscussion || !newDiscussion.trim()}
+                    >
+                      {postingDiscussion ? 'Posting…' : 'Post to module forum'}
+                      <MessageSquare size={16} style={{ marginLeft: 6 }} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="discussion-thread-section">
+                  <div className="discussion-thread-header">
+                    <h3 className="module-section-title">
+                      <MessageSquare size={18} /> Peers in this module
+                    </h3>
+                    {!forumLoading && discussions.length > 0 && (
+                      <span className="badge badge-green">{discussions.length} post{discussions.length !== 1 ? 's' : ''}</span>
+                    )}
+                  </div>
+
+                  <div className="discussion-list">
+                    {forumLoading ? (
+                      <div className="module-loading-state">
+                        <Loader size={24} className="spin" />
+                        <span>Loading thread…</span>
                       </div>
-                    </div>
-                  ))
-                )}
+                    ) : discussions.length === 0 ? (
+                      <div className="discussion-empty-state">
+                        <MessageSquare size={32} color="var(--k-400)" />
+                        <p><strong>No posts yet</strong></p>
+                        <p className="text-sm text-muted">Be the first to start the conversation for this module.</p>
+                      </div>
+                    ) : (
+                      discussions.map((d, i) => (
+                        <article key={d.id || i} className="discussion-post">
+                          <div className="forum-author-avatar" title={d.author_name || 'Learner'}>
+                            {getInitials(d.user_id)}
+                          </div>
+                          <div className="discussion-post-body">
+                            <div className="discussion-post-meta">
+                              <strong>{d.author_name || 'Learner'}</strong>
+                              {d.created_at && (
+                                <time dateTime={d.created_at}>
+                                  {new Date(d.created_at).toLocaleDateString(undefined, {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                  })}
+                                </time>
+                              )}
+                            </div>
+                            <p className="discussion-post-content">{d.content}</p>
+                          </div>
+                        </article>
+                      ))
+                    )}
+                  </div>
+                </div>
               </div>
               <StepNav
                 onBack={goBack}

@@ -1,7 +1,19 @@
+import { Link } from 'react-router-dom';
 import { Info } from 'lucide-react';
 import './BalanceRing.css';
 
-export default function BalanceRing({ progress = 0 }) {
+export default function BalanceRing({ progress = 0, modules = [] }) {
+  const moduleList = modules.length ? modules : [1, 2, 3, 4, 5, 6].map((id) => ({ id }));
+  const positions = [
+    { id: 1, x: 200, y: 60 },
+    { id: 2, x: 321, y: 130 },
+    { id: 3, x: 321, y: 270 },
+    { id: 4, x: 200, y: 340 },
+    { id: 5, x: 79, y: 270 },
+    { id: 6, x: 79, y: 130 },
+  ];
+  const arcPct = Math.min(100, Math.max(0, progress)) / 100;
+  const arcVisible = arcPct > 0;
   // A simple SVG implementation of the Terrascape Balance Ring
   // Inner circle: Social Foundation
   // Outer circle: Ecological Ceiling
@@ -28,51 +40,44 @@ export default function BalanceRing({ progress = 0 }) {
           {/* The Safe Space (Filled area) */}
           <circle cx="200" cy="200" r="140" fill="transparent" stroke="var(--k-500)" strokeWidth="80" opacity="0.15" />
           
-          {/* Progress Indicator Arc */}
-          <path 
-            d="M 200 60 A 140 140 0 0 1 330 145" 
-            fill="none" 
-            stroke="var(--k-600)" 
-            strokeWidth="80" 
-            opacity="0.8"
-            strokeLinecap="round"
-          />
+          {arcVisible && (
+            <path
+              d="M 200 60 A 140 140 0 0 1 330 145"
+              fill="none"
+              stroke="var(--k-600)"
+              strokeWidth="80"
+              opacity={0.35 + arcPct * 0.55}
+              strokeLinecap="round"
+              pathLength="100"
+              strokeDasharray={`${arcPct * 45} 100`}
+            />
+          )}
 
           {/* Labels */}
           <text x="200" y="30" textAnchor="middle" fill="var(--green-700)" fontSize="14" fontWeight="bold">Ecological Ceiling</text>
           <text x="200" y="205" textAnchor="middle" fill="var(--info)" fontSize="14" fontWeight="bold">Social Foundation</text>
           
-          {/* Module Nodes */}
-          <g transform="translate(200, 60)">
-            <circle cx="0" cy="0" r="15" fill="var(--k-600)" />
-            <text x="0" y="5" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">1</text>
-          </g>
-          <g transform="translate(321, 130)">
-            <circle cx="0" cy="0" r="15" fill="var(--k-600)" />
-            <text x="0" y="5" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">2</text>
-          </g>
-          <g transform="translate(321, 270)">
-            <circle cx="0" cy="0" r="15" fill="var(--grey-300)" />
-            <text x="0" y="5" textAnchor="middle" fill="var(--grey-600)" fontSize="12" fontWeight="bold">3</text>
-          </g>
-          <g transform="translate(200, 340)">
-            <circle cx="0" cy="0" r="15" fill="var(--grey-300)" />
-            <text x="0" y="5" textAnchor="middle" fill="var(--grey-600)" fontSize="12" fontWeight="bold">4</text>
-          </g>
-          <g transform="translate(79, 270)">
-            <circle cx="0" cy="0" r="15" fill="var(--grey-300)" />
-            <text x="0" y="5" textAnchor="middle" fill="var(--grey-600)" fontSize="12" fontWeight="bold">5</text>
-          </g>
-          <g transform="translate(79, 130)">
-            <circle cx="0" cy="0" r="15" fill="var(--grey-300)" />
-            <text x="0" y="5" textAnchor="middle" fill="var(--grey-600)" fontSize="12" fontWeight="bold">6</text>
-          </g>
+          {positions.map(({ id, x, y }) => {
+            const m = moduleList.find((mod) => mod.id === id);
+            const done = m?.status === 'completed';
+            const active = m?.status === 'active';
+            const fill = done ? 'var(--k-600)' : active ? 'var(--k-400)' : 'var(--grey-300)';
+            const textFill = done || active ? 'white' : 'var(--grey-600)';
+            return (
+              <g key={id} transform={`translate(${x}, ${y})`}>
+                <circle cx="0" cy="0" r="15" fill={fill} />
+                <text x="0" y="5" textAnchor="middle" fill={textFill} fontSize="12" fontWeight="bold">
+                  {id}
+                </text>
+              </g>
+            );
+          })}
         </svg>
       </div>
 
       <div className="balance-ring-footer">
-        <span>Framework Progress: <strong>33%</strong></span>
-        <button className="btn btn-outline btn-sm">View Details</button>
+        <span>Framework Progress: <strong>{Math.round(progress)}%</strong></span>
+        <Link to="/learn/modules" className="btn btn-outline btn-sm">View modules</Link>
       </div>
     </div>
   );

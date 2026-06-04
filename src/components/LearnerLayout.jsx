@@ -6,15 +6,22 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, BookOpen, Mic2, MessageSquare, User,
   Award, Bell, ChevronLeft, ChevronRight, LogOut,
-  Leaf, Menu, HardDrive, Calendar
+  Leaf, Menu, HardDrive, Calendar, ClipboardList
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { getDisplayName, getInitials, getRoleLine } from '../utils/profileDisplay';
+import { getDisplayName, getRoleLine } from '../utils/profileDisplay';
+import { useLearnerAvatar } from '../hooks/useLearnerAvatar';
+import LearnerAvatar from './LearnerAvatar';
+import PhaseBadge from './gamification/PhaseBadge';
+import { useGamification } from '../hooks/useGamification';
+import NotificationPanel, { useUnreadNotifications } from './gamification/NotificationPanel';
 import './LearnerLayout.css';
+import './gamification/gamification.css';
 
-const navItems = [
+const learningNav = [
   { icon: LayoutDashboard, label: 'Dashboard',    path: '/learn/dashboard' },
   { icon: BookOpen,        label: 'My Modules',   path: '/learn/modules' },
+  { icon: ClipboardList,   label: 'Assessments',  path: '/learn/assessment' },
   { icon: Mic2,            label: 'Storytelling', path: '/learn/storytelling' },
   { icon: MessageSquare,   label: 'Forum',        path: '/learn/forum' },
   { icon: Calendar,        label: 'Webinars',     path: '/learn/webinars' },
@@ -22,100 +29,144 @@ const navItems = [
   { icon: Award,           label: 'Certificate',  path: '/learn/certificate' },
 ];
 
-const bottomItems = [
-  { icon: User,       label: 'Profile',  path: '/learn/profile' },
+const accountNav = [
+  { icon: User, label: 'Profile', path: '/learn/profile' },
 ];
+
+function isNavActive(pathname, path) {
+  if (path === '/learn/assessment') {
+    return pathname.startsWith('/learn/assessment');
+  }
+  return pathname === path;
+}
 
 export default function LearnerLayout({ children, title, subtitle }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const unreadNotifs = useUnreadNotifications();
   const location = useLocation();
   const { user, profile, logout } = useAuth();
 
   const displayName = getDisplayName(profile, user);
-  const initials = getInitials(profile, user);
   const roleLine = getRoleLine(profile);
+  const { avatarId } = useLearnerAvatar();
+  const { phase } = useGamification([]);
+
+  const closeMobile = () => setMobileOpen(false);
+
+  const renderNavLink = ({ icon: Icon, label, path }) => {
+    const active = isNavActive(location.pathname, path);
+    return (
+      <Link
+        key={path}
+        to={path}
+        className={`sidebar-nav-link ${active ? 'is-active' : ''}`}
+        title={collapsed ? label : undefined}
+        aria-current={active ? 'page' : undefined}
+        onClick={closeMobile}
+      >
+        <span className="sidebar-nav-icon" aria-hidden>
+          <Icon size={18} strokeWidth={active ? 2.25 : 2} />
+        </span>
+        {!collapsed && <span className="sidebar-nav-text">{label}</span>}
+      </Link>
+    );
+  };
 
   return (
     <div className={`learner-layout ${collapsed ? 'sidebar-collapsed' : ''}`}>
-      {mobileOpen && <div className="mobile-overlay" onClick={() => setMobileOpen(false)} />}
+      {mobileOpen && <div className="mobile-overlay" onClick={closeMobile} role="presentation" />}
 
-      <aside className={`learner-sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
-        <div className="sidebar-brand">
-          <div className="brand-icon">
-            <Leaf size={20} />
-          </div>
-          {!collapsed && (
-            <div className="brand-text">
-              <span className="brand-name">Kijani</span>
-              <span className="brand-sub">Terrascape</span>
-            </div>
-          )}
-        </div>
-
-        <button type="button" className="sidebar-toggle" onClick={() => setCollapsed(!collapsed)}>
-          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-        </button>
-
-        {!collapsed && (
-          <div className="sidebar-user">
-            <div className="user-avatar" title={displayName}>{initials}</div>
-            <div className="user-info">
-              <span className="user-name">{displayName}</span>
-              <span className="user-role">{roleLine}</span>
-              {user?.email && (
-                <span className="user-email" title={user.email}>{user.email}</span>
-              )}
-            </div>
-          </div>
-        )}
-
-        {collapsed && (
-          <div className="sidebar-user-collapsed" title={displayName}>
-            <div className="user-avatar">{initials}</div>
-          </div>
-        )}
+      <aside
+        className={`learner-sidebar ${mobileOpen ? 'mobile-open' : ''}`}
+        aria-label="Learner navigation"
+      >
+        <header className="sidebar-header">
+          <Link to="/learn/dashboard" className="sidebar-brand" onClick={closeMobile}>
+            <span className="sidebar-brand-mark">
+              <Leaf size={20} />
+            </span>
+            {!collapsed && (
+              <span className="sidebar-brand-copy">
+                <span className="sidebar-brand-title">Kijani Terrascape</span>
+                <span className="sidebar-brand-tag">Digital Learning Journey</span>
+              </span>
+            )}
+          </Link>
+          <button
+            type="button"
+            className="sidebar-collapse-btn"
+            onClick={() => setCollapsed(!collapsed)}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          >
+            {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          </button>
+        </header>
 
         <nav className="sidebar-nav">
-          <span className={`nav-section-label ${collapsed ? 'hidden' : ''}`}>Learning</span>
-          {navItems.map(({ icon: Icon, label, path }) => (
-            <Link
-              key={path}
-              to={path}
-              className={`nav-item ${location.pathname === path ? 'active' : ''}`}
-              title={collapsed ? label : ''}
-            >
-              <Icon size={19} />
-              {!collapsed && <span>{label}</span>}
-              {location.pathname === path && !collapsed && <div className="nav-active-dot" />}
-            </Link>
-          ))}
+          <div className="sidebar-nav-group">
+            {!collapsed && <span className="sidebar-nav-heading">Learn</span>}
+            <div className="sidebar-nav-list">
+              {learningNav.map(renderNavLink)}
+            </div>
+          </div>
 
-          <div className="nav-divider" />
-          <span className={`nav-section-label ${collapsed ? 'hidden' : ''}`}>Account</span>
-          {bottomItems.map(({ icon: Icon, label, path }) => (
-            <Link
-              key={path}
-              to={path}
-              className={`nav-item ${location.pathname === path ? 'active' : ''}`}
-              title={collapsed ? label : ''}
-            >
-              <Icon size={19} />
-              {!collapsed && <span>{label}</span>}
-            </Link>
-          ))}
+          <div className="sidebar-nav-group">
+            {!collapsed && <span className="sidebar-nav-heading">Account</span>}
+            <div className="sidebar-nav-list">
+              {accountNav.map(renderNavLink)}
+            </div>
+          </div>
         </nav>
 
-        <button type="button" className="nav-item logout-btn" onClick={logout}>
-          <LogOut size={19} />
-          {!collapsed && <span>Sign Out</span>}
-        </button>
+        <footer className={`sidebar-footer ${collapsed ? 'sidebar-footer--collapsed' : ''}`}>
+          <div className="sidebar-profile">
+            <Link
+              to="/learn/profile"
+              className="sidebar-profile-link"
+              title={collapsed ? `${displayName} — Profile` : undefined}
+              onClick={closeMobile}
+            >
+              <LearnerAvatar
+                avatarId={avatarId}
+                size="sm"
+                className="sidebar-profile-avatar"
+                title={displayName}
+              />
+              {!collapsed && (
+                <span className="sidebar-profile-details">
+                  <span className="sidebar-profile-name">{displayName}</span>
+                  <span className="sidebar-profile-role">{roleLine}</span>
+                  <PhaseBadge phase={phase} compact />
+                </span>
+              )}
+            </Link>
+          </div>
+          <button
+            type="button"
+            className="sidebar-sign-out"
+            onClick={logout}
+            title={collapsed ? 'Sign out' : undefined}
+          >
+            <LogOut size={18} />
+            {!collapsed && <span>Sign out</span>}
+          </button>
+          {!collapsed && (
+            <p className="sidebar-footer-meta">© Kijani Terrascape</p>
+          )}
+        </footer>
       </aside>
 
       <div className="learner-main">
         <header className="learner-topbar">
           <div className="topbar-left">
-            <button type="button" className="mobile-menu-btn" onClick={() => setMobileOpen(true)}>
+            <button
+              type="button"
+              className="mobile-menu-btn"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+            >
               <Menu size={22} />
             </button>
             <div>
@@ -124,11 +175,20 @@ export default function LearnerLayout({ children, title, subtitle }) {
             </div>
           </div>
           <div className="topbar-right">
-            <button type="button" className="topbar-icon-btn" style={{ position: 'relative' }} aria-label="Notifications">
+            <button
+              type="button"
+              className="topbar-icon-btn"
+              style={{ position: 'relative' }}
+              aria-label="Notifications"
+              onClick={() => setNotifOpen((o) => !o)}
+            >
               <Bell size={20} />
-              <span className="notif-dot" />
+              {unreadNotifs > 0 && <span className="notif-dot" />}
             </button>
-            <div className="topbar-avatar" title={displayName}>{initials}</div>
+            <NotificationPanel open={notifOpen} onClose={() => setNotifOpen(false)} />
+            <Link to="/learn/profile" className="topbar-avatar-wrap" title="Profile & avatar">
+              <LearnerAvatar avatarId={avatarId} size="sm" showRing />
+            </Link>
           </div>
         </header>
 

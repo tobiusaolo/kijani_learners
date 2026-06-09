@@ -32,19 +32,19 @@ export default function BalanceRing({ progress = 0, modules = [] }) {
       <div className="svg-wrapper">
         <svg viewBox="0 0 400 400" className="balance-ring-svg">
           {/* Outer Boundary: Ecological Ceiling */}
-          <circle cx="200" cy="200" r="180" fill="#e8f5e9" stroke="var(--green-500)" strokeWidth="4" strokeDasharray="10 10" />
+          <circle cx="200" cy="200" r="180" fill="var(--g-50)" stroke="var(--g-500)" strokeWidth="4" strokeDasharray="10 10" />
           
           {/* Inner Boundary: Social Foundation */}
           <circle cx="200" cy="200" r="100" fill="#fff" stroke="var(--info)" strokeWidth="4" strokeDasharray="10 10" />
           
           {/* The Safe Space (Filled area) */}
-          <circle cx="200" cy="200" r="140" fill="transparent" stroke="var(--k-500)" strokeWidth="80" opacity="0.15" />
+          <circle cx="200" cy="200" r="140" fill="transparent" stroke="var(--g-500)" strokeWidth="80" opacity="0.15" />
           
           {arcVisible && (
             <path
               d="M 200 60 A 140 140 0 0 1 330 145"
               fill="none"
-              stroke="var(--k-600)"
+              stroke="var(--g-600)"
               strokeWidth="80"
               opacity={0.35 + arcPct * 0.55}
               strokeLinecap="round"
@@ -54,14 +54,14 @@ export default function BalanceRing({ progress = 0, modules = [] }) {
           )}
 
           {/* Labels */}
-          <text x="200" y="30" textAnchor="middle" fill="var(--green-700)" fontSize="14" fontWeight="bold">Ecological Ceiling</text>
+          <text x="200" y="30" textAnchor="middle" fill="var(--g-700)" fontSize="14" fontWeight="bold">Ecological Ceiling</text>
           <text x="200" y="205" textAnchor="middle" fill="var(--info)" fontSize="14" fontWeight="bold">Social Foundation</text>
           
           {positions.map(({ id, x, y }) => {
             const m = moduleList.find((mod) => mod.id === id);
             const done = m?.status === 'completed';
             const active = m?.status === 'active';
-            const fill = done ? 'var(--k-600)' : active ? 'var(--k-400)' : 'var(--grey-300)';
+            const fill = done ? 'var(--g-600)' : active ? 'var(--g-400)' : 'var(--grey-300)';
             const textFill = done || active ? 'white' : 'var(--grey-600)';
             return (
               <g key={id} transform={`translate(${x}, ${y})`}>

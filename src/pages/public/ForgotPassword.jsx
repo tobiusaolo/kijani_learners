@@ -54,7 +54,7 @@ export default function ForgotPassword() {
           {sent ? (
             <div style={{ textAlign: 'center', padding: '1rem 0' }}>
               <CheckCircle size={52} color="#16a34a" style={{ marginBottom: '1.25rem' }} />
-              <h2 style={{ marginBottom: '0.5rem', color: 'var(--k-900)' }}>Check your inbox</h2>
+              <h2 style={{ marginBottom: '0.5rem', color: 'var(--g-900)' }}>Check your inbox</h2>
               <p style={{ color: 'var(--grey-500)', marginBottom: '2rem', lineHeight: 1.6 }}>
                 If an account exists for <strong>{email}</strong>, we've sent a password reset link.
                 The link expires in <strong>1 hour</strong>.

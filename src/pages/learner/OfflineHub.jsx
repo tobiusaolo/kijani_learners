@@ -67,7 +67,7 @@ export default function OfflineHub() {
       <div className="offline-hub-wrap">
         <div className="offline-header-card card">
           <div className="offline-header-left">
-            <div className="wifi-icon-wrap"><WifiOff size={24} color="var(--k-600)" /></div>
+            <div className="wifi-icon-wrap"><WifiOff size={24} color="var(--g-600)" /></div>
             <div>
               <h3>Keep Learning Anywhere</h3>
               <p>
@@ -92,7 +92,7 @@ export default function OfflineHub() {
                 <div key={pack.module_id} className="download-card card">
                   <div className="download-card-info">
                     <div className="download-card-icon">
-                      <span className="text-sm font-bold" style={{ color: 'var(--k-600)' }}>MOD {pack.num}</span>
+                      <span className="text-sm font-bold" style={{ color: 'var(--g-600)' }}>MOD {pack.num}</span>
                     </div>
                     <div className="download-card-text">
                       <h4>{pack.title}</h4>

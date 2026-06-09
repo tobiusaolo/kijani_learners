@@ -2,7 +2,7 @@
   flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
-  background: var(--k-50);
+  background: var(--g-50);
   box-shadow: var(--shadow-xs);
 }
 
@@ -15,7 +15,7 @@
 .learner-avatar--ring {
   box-shadow:
     0 0 0 3px var(--white),
-    0 0 0 5px var(--k-200);
+    0 0 0 5px var(--g-200);
 }
 
 .learner-sidebar .learner-avatar--sm,

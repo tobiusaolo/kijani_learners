@@ -89,7 +89,7 @@ export default function Register() {
             <div className="auth-features">
               {['Open to all African youth', '50% female participation target', 'Self-paced, mobile-friendly', 'Certificate upon completion'].map((f, i) => (
                 <div key={i} className="auth-feature-item">
-                  <Check size={14} color="var(--k-300)" />
+                  <Check size={14} color="var(--g-300)" />
                   <span>{f}</span>
                 </div>
               ))}
@@ -199,7 +199,7 @@ export default function Register() {
           {step === 2 && (
             <div className="auth-form">
               <div className="reg-commitment-card">
-                <h4 style={{ color: 'var(--k-800)', marginBottom: '0.5rem' }}>Programme Commitment</h4>
+                <h4 style={{ color: 'var(--g-800)', marginBottom: '0.5rem' }}>Programme Commitment</h4>
                 <p style={{ fontSize: '.88rem', color: 'var(--grey-600)', lineHeight: 1.6 }}>
                   The Kijani Terrascape journey requires approximately 2 hours of self-paced learning, completion of all 6 modules, and creation of one digital storytelling output.
                 </p>
@@ -210,7 +210,7 @@ export default function Register() {
               </label>
               <label className="reg-check-label">
                 <input type="checkbox" checked={form.consent} onChange={e => update('consent', e.target.checked)} />
-                <span>I consent to my data being used for programme monitoring and anonymised reporting in accordance with the <a href="#" style={{ color: 'var(--k-500)' }}>Privacy Policy</a>.</span>
+                <span>I consent to my data being used for programme monitoring and anonymised reporting in accordance with the <a href="#" style={{ color: 'var(--g-500)' }}>Privacy Policy</a>.</span>
               </label>
               <div className="reg-summary">
                 <p><strong>Name:</strong> {form.firstName} {form.lastName}</p>

@@ -173,7 +173,7 @@ export default function Forum() {
             </div>
           </div>
 
-          <div className="card" style={{ marginTop: '1.5rem', background: 'var(--k-800)', color: 'var(--white)' }}>
+          <div className="card" style={{ marginTop: '1.5rem', background: 'var(--g-800)', color: 'var(--white)' }}>
             <h4 style={{ color: 'var(--white)', marginBottom: '0.5rem' }}>Guidelines</h4>
             <ul className="forum-rules">
               <li>Be respectful and constructive</li>
@@ -277,7 +277,7 @@ export default function Forum() {
                   </div>
 
                   <div className="post-body">
-                    {post.is_pinned && <span className="badge badge-green" style={{ marginBottom: '0.5rem', fontSize: '.65rem' }}>📌 Pinned</span>}
+                    {post.is_pinned && <span className="badge badge-brand" style={{ marginBottom: '0.5rem', fontSize: '.65rem' }}>📌 Pinned</span>}
                     <h3 className="post-title">{post.title}</h3>
                     <p className="post-content">{post.content}</p>
                   </div>
@@ -321,8 +321,8 @@ export default function Forum() {
                       ) : (
                         <>
                           {(replies[post.id] || []).map(r => (
-                            <div key={r.id} style={{ marginBottom: '0.75rem', paddingLeft: '1rem', borderLeft: '2px solid var(--k-200)' }}>
-                              <div style={{ fontSize: '.8rem', fontWeight: 600, color: 'var(--k-800)' }}>{r.author_name || r.user_id}</div>
+                            <div key={r.id} style={{ marginBottom: '0.75rem', paddingLeft: '1rem', borderLeft: '2px solid var(--g-200)' }}>
+                              <div style={{ fontSize: '.8rem', fontWeight: 600, color: 'var(--g-800)' }}>{r.author_name || r.user_id}</div>
                               <p style={{ fontSize: '.85rem', color: 'var(--grey-700)', margin: '0.25rem 0 0' }}>{r.content}</p>
                               <span style={{ fontSize: '.72rem', color: 'var(--grey-400)' }}>
                                 {r.created_at ? new Date(r.created_at).toLocaleString() : ''}

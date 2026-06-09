@@ -4,7 +4,7 @@
   margin-bottom: var(--sp-6);
   padding: 0;
   overflow: hidden;
-  border: 1px solid var(--k-100);
+  border: 1px solid var(--g-100);
   display: grid;
   grid-template-columns: minmax(200px, 38%) 1fr;
   align-items: stretch;
@@ -43,7 +43,7 @@
   font-family: var(--font-display);
   font-size: 1.35rem;
   font-weight: 700;
-  color: var(--k-800);
+  color: var(--g-800);
   margin: 0 0 0.35rem;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .dash-welcome-sub strong {
-  color: var(--k-700);
+  color: var(--g-700);
 }
 
 @media (max-width: 768px) {
@@ -105,7 +105,7 @@
 .dash-right { grid-column: 2; }
 
 .dash-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-4); }
-.dash-card-header h4 { color: var(--k-800); }
+.dash-card-header h4 { color: var(--g-800); }
 
 /* Journey Progress */
 .journey-bar-wrap { margin-bottom: var(--sp-6); }
@@ -116,13 +116,13 @@
   padding: var(--sp-3); border-radius: var(--r-md); border: 1px solid var(--grey-100);
   transition: all var(--t-fast);
 }
-.module-prog-item.active { border-color: var(--k-300); background: var(--k-50); }
+.module-prog-item.active { border-color: var(--g-300); background: var(--g-50); }
 .module-prog-item.locked { opacity: .55; }
-.module-prog-item:hover:not(.locked) { border-color: var(--k-200); }
+.module-prog-item:hover:not(.locked) { border-color: var(--g-200); }
 .mod-prog-emoji { font-size: 1.5rem; flex-shrink: 0; }
 .mod-prog-info { flex: 1; }
 .mod-prog-title { display: flex; align-items: center; gap: var(--sp-2); font-size: .875rem; font-weight: 600; color: var(--charcoal); }
-.mod-prog-num { font-size: .7rem; font-weight: 800; color: var(--k-500); letter-spacing: .08em; }
+.mod-prog-num { font-size: .7rem; font-weight: 800; color: var(--g-500); letter-spacing: .08em; }
 .mod-prog-right { flex-shrink: 0; }
 
 /* Forum */
@@ -145,11 +145,11 @@
 .webinar-card-inner { display: flex; gap: var(--sp-4); align-items: flex-start; }
 .webinar-date-badge {
   width: 52px; flex-shrink: 0;
-  background: var(--k-50); border: 1px solid var(--k-100);
+  background: var(--g-50); border: 1px solid var(--g-100);
   border-radius: var(--r-md); text-align: center; padding: var(--sp-2) var(--sp-1);
 }
-.webinar-date-day { display: block; font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: var(--k-700); line-height: 1; }
-.webinar-date-mon { display: block; font-size: .65rem; font-weight: 700; color: var(--k-500); text-transform: uppercase; letter-spacing: .08em; }
+.webinar-date-day { display: block; font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: var(--g-700); line-height: 1; }
+.webinar-date-mon { display: block; font-size: .65rem; font-weight: 700; color: var(--g-500); text-transform: uppercase; letter-spacing: .08em; }
 
 /* Quick Links */
 .quick-links { display: flex; flex-direction: column; gap: var(--sp-2); }
@@ -160,12 +160,12 @@
   text-decoration: none; transition: all var(--t-fast);
   border: 1px solid var(--grey-100);
 }
-.quick-link-item:hover { background: var(--k-50); border-color: var(--k-200); color: var(--k-700); }
+.quick-link-item:hover { background: var(--g-50); border-color: var(--g-200); color: var(--g-700); }
 .quick-link-icon {
   width: 30px; height: 30px;
-  background: var(--k-50); border-radius: var(--r-sm);
+  background: var(--g-50); border-radius: var(--r-sm);
   display: flex; align-items: center; justify-content: center;
-  color: var(--k-600);
+  color: var(--g-600);
 }
 
 @media (max-width: 1024px) {

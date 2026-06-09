@@ -113,12 +113,12 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="auth-divider"><span>or</span></div>
+          {/* <div className="auth-divider"><span>or</span></div>
 
           <button className="btn btn-ghost" style={{ width: '100%', border: '1px solid var(--grey-200)' }}>
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="18" />
             Continue with Google
-          </button>
+          </button> */}
 
           <p className="auth-switch">
             Don't have an account?{' '}

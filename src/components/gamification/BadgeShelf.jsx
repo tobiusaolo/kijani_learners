@@ -20,7 +20,7 @@ export default function BadgeShelf({ unlockedIds = [], limit = 4 }) {
     <div className="badge-shelf card">
       <div className="badge-shelf-header">
         <h4>Achievements</h4>
-        <span className="badge badge-green">{unlockedIds.length} earned</span>
+        <span className="badge badge-brand">{unlockedIds.length} earned</span>
       </div>
       <div className="badge-shelf-row">
         {recent.map((id) => {
@@ -34,7 +34,7 @@ export default function BadgeShelf({ unlockedIds = [], limit = 4 }) {
           );
         })}
       </div>
-      <Link to="/learn/profile#badges" className="text-sm text-green" style={{ marginTop: '0.75rem', display: 'inline-block' }}>
+      <Link to="/learn/profile#badges" className="text-sm text-brand" style={{ marginTop: '0.75rem', display: 'inline-block' }}>
         View all →
       </Link>
     </div>

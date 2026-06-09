@@ -45,11 +45,11 @@
 }
 
 .onboarding-dot.active {
-  background: var(--k-500);
+  background: var(--g-500);
 }
 
 .onboarding-dot.completed {
-  background: var(--k-300);
+  background: var(--g-300);
 }
 
 .onboarding-content {
@@ -60,18 +60,18 @@
 .onboarding-icon-wrap {
   width: 72px;
   height: 72px;
-  background: var(--k-50);
+  background: var(--g-50);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1.5rem;
-  border: 1px solid var(--k-100);
+  border: 1px solid var(--g-100);
 }
 
 .onboarding-content h2 {
   font-size: 1.5rem;
-  color: var(--k-900);
+  color: var(--g-900);
   margin-bottom: 0.75rem;
 }
 

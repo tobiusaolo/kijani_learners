@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2/dist/sweetalert2.esm.all.js';
 
-const confirmColor = '#2e8b57';
+const confirmColor = '#06402B';
 const cancelColor = '#6b7280';
 
 export const showSuccess = (title, text = '') =>

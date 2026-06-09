@@ -7,7 +7,7 @@
 .story-intro-card {
   display: flex;
   gap: var(--sp-4);
-  background: linear-gradient(135deg, var(--k-800), var(--k-600));
+  background: linear-gradient(135deg, var(--g-800), var(--g-600));
   color: var(--white);
   margin-bottom: var(--sp-6);
 }
@@ -49,14 +49,14 @@
 }
 
 .format-card:hover {
-  background: var(--k-50);
-  border-color: var(--k-300);
+  background: var(--g-50);
+  border-color: var(--g-300);
 }
 
 .format-card.active {
-  background: var(--k-100);
-  border-color: var(--k-500);
-  color: var(--k-800);
+  background: var(--g-100);
+  border-color: var(--g-500);
+  color: var(--g-800);
 }
 
 .story-upload-zone {
@@ -72,14 +72,14 @@
 }
 
 .story-upload-zone:hover {
-  border-color: var(--k-400);
-  background: var(--k-50);
+  border-color: var(--g-400);
+  background: var(--g-50);
 }
 
 .story-preview {
   margin-top: var(--sp-4);
   padding: var(--sp-4);
-  border: 1px solid var(--k-200);
+  border: 1px solid var(--g-200);
   border-radius: var(--r-md);
   background: var(--white);
 }
@@ -91,7 +91,7 @@
   margin: 0 0 var(--sp-3);
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--k-700);
+  color: var(--g-700);
 }
 
 .story-preview-media {

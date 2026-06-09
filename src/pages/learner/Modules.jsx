@@ -11,7 +11,7 @@ const MODULE_EMOJIS = {
 };
 
 const MODULE_COLORS = {
-  1: '#1a5c38', 2: '#2e8b57', 3: '#4caf7d', 4: '#237048', 5: '#0d3320', 6: '#1a5c38'
+  1: '#06402B', 2: '#674736', 3: '#2a6649', 4: '#5a3d2f', 5: '#043528', 6: '#674736'
 };
 
 export default function Modules() {
@@ -19,7 +19,7 @@ export default function Modules() {
     (list || []).map((m) => ({
       ...m,
       emoji: MODULE_EMOJIS[m.id] || '📚',
-      color: MODULE_COLORS[m.id] || '#2e8b57',
+      color: MODULE_COLORS[m.id] || '#06402B',
       num: String(m.id).padStart(2, '0'),
       progress: m.progress_pct ?? m.progress ?? 0,
     }));
@@ -48,7 +48,7 @@ export default function Modules() {
               <div className="mg-card-top" style={{ borderTopColor: m.color }}>
                 <div className="mg-header">
                   <span className="mg-num" style={{ color: m.color }}>MODULE {m.num}</span>
-                  {m.status === 'completed' && <CheckCircle size={18} color="var(--k-500)" />}
+                  {m.status === 'completed' && <CheckCircle size={18} color="var(--g-500)" />}
                   {m.status === 'locked' && <Lock size={16} color="var(--grey-400)" />}
                 </div>
                 <div className="mg-emoji">{m.emoji}</div>
@@ -67,7 +67,7 @@ export default function Modules() {
                   <span className="text-xs font-semibold">{m.progress}%</span>
                 </div>
                 <div className="progress-bar" style={{ height: '6px', marginBottom: '1rem' }}>
-                  <div className="progress-fill" style={{ width: `${m.progress}%`, background: m.progress === 100 ? 'var(--k-500)' : 'linear-gradient(90deg, var(--k-500), var(--k-300))' }} />
+                  <div className="progress-fill" style={{ width: `${m.progress}%`, background: m.progress === 100 ? 'var(--g-500)' : 'linear-gradient(90deg, var(--g-500), var(--g-300))' }} />
                 </div>
                   </>
                 )}

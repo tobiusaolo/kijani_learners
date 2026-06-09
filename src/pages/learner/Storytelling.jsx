@@ -165,7 +165,7 @@ export default function Storytelling() {
               <div style={{ textAlign: 'center', padding: '2rem' }}><Loader size={24} className="spin" /></div>
             ) : myStory && myStory.status !== 'draft' ? (
               <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--grey-50)', borderRadius: 'var(--r-md)' }}>
-                <CheckCircle size={48} color="var(--k-500)" style={{ margin: '0 auto 1rem' }} />
+                <CheckCircle size={48} color="var(--g-500)" style={{ margin: '0 auto 1rem' }} />
                 <h3>Story Submitted!</h3>
                 <p style={{ color: 'var(--grey-600)', marginTop: '0.5rem' }}>
                   &quot;{myStory.title}&quot; — <strong>{myStory.status}</strong>
@@ -221,7 +221,7 @@ export default function Storytelling() {
                     <input ref={fileRef} type="file" accept=".pdf,.mp3,.mp4,.png,.jpg,.jpeg,.webp" style={{ display: 'none' }}
                       onChange={handleFileUpload} />
                     <div className="story-upload-zone" onClick={() => !uploading && fileRef.current?.click()} style={{ cursor: uploading ? 'wait' : 'pointer' }}>
-                      <Upload size={32} color="var(--k-400)" />
+                      <Upload size={32} color="var(--g-400)" />
                       <p style={{ marginTop: '0.5rem', fontWeight: 600 }}>
                         {uploading ? 'Uploading…' : submission.file_url ? 'Upload another file' : 'Click to upload'}
                       </p>
@@ -255,7 +255,7 @@ export default function Storytelling() {
         <div className="story-sidebar">
           <div className="card">
             <h4 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Info size={18} color="var(--k-500)" /> Guidelines
+              <Info size={18} color="var(--g-500)" /> Guidelines
             </h4>
             <ul className="story-guidelines">
               <li>Integrate at least <strong>two</strong> curriculum themes.</li>

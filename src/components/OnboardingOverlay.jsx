@@ -55,7 +55,7 @@ export default function OnboardingOverlay({ onComplete }) {
         
         <div className="onboarding-content">
           <div className="onboarding-icon-wrap">
-            <StepIcon size={32} color="var(--k-600)" />
+            <StepIcon size={32} color="var(--g-600)" />
           </div>
           <h2>{steps[currentStep].title}</h2>
           <p>{steps[currentStep].desc}</p>

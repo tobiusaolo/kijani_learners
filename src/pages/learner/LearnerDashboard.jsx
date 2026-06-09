@@ -130,10 +130,10 @@ export default function LearnerDashboard() {
 
         <div className="dash-stats-row">
           {[
-            { icon: TrendingUp, label: 'Overall Progress', value: `${overall}%`, sub: `${completedModules} of ${modules.length} modules done`, color: 'var(--k-500)' },
+            { icon: TrendingUp, label: 'Overall Progress', value: `${overall}%`, sub: `${completedModules} of ${modules.length} modules done`, color: 'var(--g-500)' },
             { icon: Star,       label: 'Quiz Strength',   value: avgQuizDisplay, sub: avgQuizSub, color: '#f59e0b' },
             { icon: Clock,      label: 'Time Invested',    value: timeDisplay, sub: timeSub, color: 'var(--info)' },
-            { icon: Target,     label: 'Current Module',   value: activeModule ? `Module ${activeModule.id}` : 'All done!', sub: activeModule?.title || 'Congratulations', color: 'var(--k-400)' },
+            { icon: Target,     label: 'Current Module',   value: activeModule ? `Module ${activeModule.id}` : 'All done!', sub: activeModule?.title || 'Congratulations', color: 'var(--g-400)' },
           ].map((s, i) => (
             <div key={i} className="dash-stat-card">
               <div className="dash-stat-icon" style={{ background: `${s.color}18`, color: s.color }}>
@@ -154,7 +154,7 @@ export default function LearnerDashboard() {
           <div className="card">
             <div className="dash-card-header">
               <h4>Journey Progress</h4>
-              <span className="badge badge-green">{completedModules}/{modules.length} Complete</span>
+              <span className="badge badge-brand">{completedModules}/{modules.length} Complete</span>
             </div>
             <div className="journey-bar-wrap">
               <div className="progress-bar" style={{ height: '12px', marginBottom: '0.5rem' }}>
@@ -162,7 +162,7 @@ export default function LearnerDashboard() {
               </div>
               <div className="journey-bar-labels">
                 <span className="text-sm text-muted">Start</span>
-                <span className="text-sm font-semibold text-green">{overall}% Complete</span>
+                <span className="text-sm font-semibold text-primary">{overall}% Complete</span>
                 <span className="text-sm text-muted">Certificate</span>
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function LearnerDashboard() {
                     </div>
                   </div>
                   <div className="mod-prog-right">
-                    {m.status === 'completed' && <CheckCircle size={18} color="var(--k-500)" />}
+                    {m.status === 'completed' && <CheckCircle size={18} color="var(--g-500)" />}
                     {m.status === 'active' && <span className="badge badge-warn" style={{ fontSize: '.7rem' }}>{m.progress || 0}%</span>}
                     {m.status === 'locked' && <Lock size={16} color="var(--grey-300)" />}
                   </div>
@@ -201,7 +201,7 @@ export default function LearnerDashboard() {
           <BadgeShelf unlockedIds={unlockedIds} />
 
           {activeModule && (
-            <div className="card card-green dash-next-card">
+            <div className="card card-brand dash-next-card">
               <div style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.08em', color: 'rgba(255,255,255,.6)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Next Up</div>
               <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{activeModule.emoji}</div>
               <h4 style={{ color: 'var(--white)', marginBottom: '0.25rem' }}>Module {activeModule.id}</h4>
@@ -218,7 +218,7 @@ export default function LearnerDashboard() {
           <div className="card" style={{ marginTop: '1.25rem' }}>
             <div className="dash-card-header">
               <h4>Upcoming Webinar</h4>
-              <Calendar size={16} color="var(--k-500)" />
+              <Calendar size={16} color="var(--g-500)" />
             </div>
             {nextWebinar ? (
               <>
@@ -232,7 +232,7 @@ export default function LearnerDashboard() {
                     </span>
                   </div>
                   <div>
-                    <p style={{ font: 'bold .92rem/1.4 var(--font-display)', color: 'var(--k-800)' }}>{nextWebinar.title}</p>
+                    <p style={{ font: 'bold .92rem/1.4 var(--font-display)', color: 'var(--g-800)' }}>{nextWebinar.title}</p>
                     <p style={{ fontSize: '.8rem', color: 'var(--grey-500)', marginTop: '4px' }}>
                       {new Date(nextWebinar.scheduled_at).toLocaleString()}
                     </p>

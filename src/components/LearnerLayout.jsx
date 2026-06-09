@@ -6,7 +6,8 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, BookOpen, Mic2, MessageSquare, User,
   Award, Bell, ChevronLeft, ChevronRight, LogOut,
-  Leaf, Menu, HardDrive, Calendar, ClipboardList
+  Leaf, Menu, HardDrive, Calendar,
+  // ClipboardList,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { getDisplayName, getRoleLine } from '../utils/profileDisplay';
@@ -21,7 +22,7 @@ import './gamification/gamification.css';
 const learningNav = [
   { icon: LayoutDashboard, label: 'Dashboard',    path: '/learn/dashboard' },
   { icon: BookOpen,        label: 'My Modules',   path: '/learn/modules' },
-  { icon: ClipboardList,   label: 'Assessments',  path: '/learn/assessment' },
+  // { icon: ClipboardList,   label: 'Assessments',  path: '/learn/assessment' },
   { icon: Mic2,            label: 'Storytelling', path: '/learn/storytelling' },
   { icon: MessageSquare,   label: 'Forum',        path: '/learn/forum' },
   { icon: Calendar,        label: 'Webinars',     path: '/learn/webinars' },
@@ -34,9 +35,9 @@ const accountNav = [
 ];
 
 function isNavActive(pathname, path) {
-  if (path === '/learn/assessment') {
-    return pathname.startsWith('/learn/assessment');
-  }
+  // if (path === '/learn/assessment') {
+  //   return pathname.startsWith('/learn/assessment');
+  // }
   return pathname === path;
 }
 

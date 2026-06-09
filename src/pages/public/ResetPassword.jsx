@@ -89,7 +89,7 @@ export default function ResetPassword() {
           {success ? (
             <div style={{ textAlign: 'center', padding: '1rem 0' }}>
               <CheckCircle size={52} color="#16a34a" style={{ marginBottom: '1.25rem' }} />
-              <h2 style={{ marginBottom: '0.5rem', color: 'var(--k-900)' }}>Password Updated!</h2>
+              <h2 style={{ marginBottom: '0.5rem', color: 'var(--g-900)' }}>Password Updated!</h2>
               <p style={{ color: 'var(--grey-500)', lineHeight: 1.6 }}>
                 Your password has been changed. A confirmation email has been sent to you.
                 Redirecting to login…

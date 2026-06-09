@@ -3,11 +3,11 @@
 const skin = '#E8B88A';
 const skinShadow = '#D4A574';
 const hair = '#2C1810';
-const shirt = '#237048';
-const shirtLight = '#4caf7d';
-const accent = '#2e8b57';
+const shirt = '#5a3d2f';
+const shirtLight = '#866b5a';
+const accent = '#674736';
 
-function Base({ children, bg = '#d6efe2' }) {
+function Base({ children, bg = '#e8ddd6' }) {
   return (
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden>
       <circle cx="60" cy="60" r="58" fill={bg} />
@@ -37,7 +37,7 @@ export function AvatarGuardian() {
 
 export function AvatarRanger() {
   return (
-    <Base bg="#f0faf4">
+    <Base bg="#f6f0eb">
       <ellipse cx="60" cy="74" rx="30" ry="30" fill="#5d4037" />
       <circle cx="60" cy="46" r="21" fill={skin} />
       <path d="M39 40 Q60 24 81 40 L78 48 Q60 34 42 48 Z" fill="#3e2723" />

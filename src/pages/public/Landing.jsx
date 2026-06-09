@@ -4,12 +4,12 @@ import { ArrowRight, Play, Users, BookOpen, Award, ChevronDown, Globe, Leaf, Zap
 import './Landing.css';
 
 const modules = [
-  { num: '01', title: 'Area-Based Conservation', desc: 'Protected areas as dynamic governance systems — national parks, community conserved areas, and beyond.', color: '#1a5c38', icon: '🌿' },
-  { num: '02', title: 'Conservation & Society', desc: 'Human dimensions — culture, indigenous knowledge, gender equity, environmental justice.', color: '#2e8b57', icon: '🤝' },
-  { num: '03', title: 'Species Conservation', desc: 'Ecological science and public perception — population dynamics, keystone species, wildlife trade.', color: '#4caf7d', icon: '🦁' },
-  { num: '04', title: 'Nature & Climate', desc: 'Biodiversity meets climate resilience — mangrove restoration, watershed management, agroforestry.', color: '#237048', icon: '🌍' },
-  { num: '05', title: 'Conservation Technologies', desc: 'Digital innovation — drones, AI species recognition, satellite monitoring, citizen science.', color: '#0d3320', icon: '🛰️' },
-  { num: '06', title: 'Digital Storytelling', desc: 'Synthesise all learning into advocacy outputs. Your voice, your conservation story.', color: '#1a5c38', icon: '✨' },
+  { num: '01', title: 'Area-Based Conservation', desc: 'Protected areas as dynamic governance systems — national parks, community conserved areas, and beyond.', color: '#06402B', icon: '🌿' },
+  { num: '02', title: 'Conservation & Society', desc: 'Human dimensions — culture, indigenous knowledge, gender equity, environmental justice.', color: '#674736', icon: '🤝' },
+  { num: '03', title: 'Species Conservation', desc: 'Ecological science and public perception — population dynamics, keystone species, wildlife trade.', color: '#2a6649', icon: '🦁' },
+  { num: '04', title: 'Nature & Climate', desc: 'Biodiversity meets climate resilience — mangrove restoration, watershed management, agroforestry.', color: '#5a3d2f', icon: '🌍' },
+  { num: '05', title: 'Conservation Technologies', desc: 'Digital innovation — drones, AI species recognition, satellite monitoring, citizen science.', color: '#043528', icon: '🛰️' },
+  { num: '06', title: 'Digital Storytelling', desc: 'Synthesise all learning into advocacy outputs. Your voice, your conservation story.', color: '#674736', icon: '✨' },
 ];
 
 const stats = [
@@ -51,7 +51,7 @@ export default function Landing() {
             <a href="#modules">Modules</a>
             <a href="#about">About</a>
             <a href="#stories">Stories</a>
-            <Link to="/apply" className="btn btn-outline btn-sm">Apply Now</Link>
+            <Link to="/apply" className="btn btn-sm nav-apply-btn">Apply Now</Link>
             <Link to="/login" className="btn btn-primary btn-sm">Sign In</Link>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function Landing() {
         <div className="container">
           <h1 className="hero-headline animate-fade-up">
             Where African Youth<br />
-            <span className="hero-headline-green">Shape Conservation</span><br />
+            <span className="hero-headline-brand">Shape Conservation</span><br />
             Futures
           </h1>
           <p className="hero-desc animate-fade-up delay-200">
@@ -287,8 +287,8 @@ function BalanceRingSVG() {
   return (
     <svg viewBox="0 0 400 400" className="balance-ring-svg">
       {/* Outer decorative rings */}
-      <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(76,175,125,.08)" strokeWidth="1" />
-      <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(76,175,125,.12)" strokeWidth="1" />
+      <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(6,64,43,.08)" strokeWidth="1" />
+      <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(6,64,43,.12)" strokeWidth="1" />
 
       {/* Connection lines */}
       {themes.map((t, i) => {
@@ -301,7 +301,7 @@ function BalanceRingSVG() {
           const y2 = 200 + 130 * Math.sin(angle2);
           return (
             <line key={`${i}-${j}`} x1={x} y1={y} x2={x2} y2={y2}
-              stroke="rgba(76,175,125,.15)" strokeWidth="1" strokeDasharray="4 4" />
+              stroke="rgba(6,64,43,.15)" strokeWidth="1" strokeDasharray="4 4" />
           );
         });
       })}
@@ -320,11 +320,11 @@ function BalanceRingSVG() {
         const ly = 200 + 178 * Math.sin(angle);
         return (
           <g key={i}>
-            <circle cx={x} cy={y} r="28" fill="url(#nodeGrad)" stroke="rgba(76,175,125,.4)" strokeWidth="1.5" />
+            <circle cx={x} cy={y} r="28" fill="url(#nodeGrad)" stroke="rgba(103,71,54,.45)" strokeWidth="1.5" />
             <text x={x} y={y + 5} textAnchor="middle" fontSize="16">{t.emoji}</text>
             {t.label.split('\n').map((line, li) => (
               <text key={li} x={lx} y={ly + (li - 0.5) * 13}
-                textAnchor="middle" fill="var(--k-700)" fontSize="9.5" fontWeight="600" fontFamily="Inter">
+                textAnchor="middle" fill="var(--k-600)" fontSize="9.5" fontWeight="600" fontFamily="Inter">
                 {line}
               </text>
             ))}
@@ -334,12 +334,12 @@ function BalanceRingSVG() {
 
       <defs>
         <radialGradient id="centerGrad" cx="40%" cy="35%">
-          <stop offset="0%" stopColor="#4caf7d" />
-          <stop offset="100%" stopColor="#0d3320" />
+          <stop offset="0%" stopColor="#2a6649" />
+          <stop offset="100%" stopColor="#032820" />
         </radialGradient>
         <radialGradient id="nodeGrad" cx="40%" cy="35%">
-          <stop offset="0%" stopColor="#237048" />
-          <stop offset="100%" stopColor="#0d3320" />
+          <stop offset="0%" stopColor="#674736" />
+          <stop offset="100%" stopColor="#032820" />
         </radialGradient>
       </defs>
     </svg>

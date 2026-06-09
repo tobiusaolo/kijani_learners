@@ -389,7 +389,7 @@ export default function ModuleDetail() {
                     onEnded={markIntroVideoDone}
                   />
                   {moduleData.intro_video_done && (
-                    <span className="badge badge-green module-done-badge">✓ Video watched</span>
+                    <span className="badge badge-success module-done-badge">✓ Video watched</span>
                   )}
                 </div>
               ) : (
@@ -688,7 +688,7 @@ export default function ModuleDetail() {
                       <MessageSquare size={18} /> Peers in this module
                     </h3>
                     {!forumLoading && discussions.length > 0 && (
-                      <span className="badge badge-green">{discussions.length} post{discussions.length !== 1 ? 's' : ''}</span>
+                      <span className="badge badge-brand">{discussions.length} post{discussions.length !== 1 ? 's' : ''}</span>
                     )}
                   </div>
 
@@ -700,7 +700,7 @@ export default function ModuleDetail() {
                       </div>
                     ) : discussions.length === 0 ? (
                       <div className="discussion-empty-state">
-                        <MessageSquare size={32} color="var(--k-400)" />
+                        <MessageSquare size={32} color="var(--g-400)" />
                         <p><strong>No posts yet</strong></p>
                         <p className="text-sm text-muted">Be the first to start the conversation for this module.</p>
                       </div>

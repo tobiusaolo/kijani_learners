@@ -189,7 +189,7 @@ export default function LearnerProfile() {
           </div>
 
           <div className="card" style={{ marginTop: '1.5rem' }}>
-            <h4 style={{ marginBottom: '1.5rem', color: 'var(--k-800)' }}>Security</h4>
+            <h4 style={{ marginBottom: '1.5rem', color: 'var(--g-800)' }}>Security</h4>
             <div className="form-group" style={{ marginBottom: '1rem' }}>
               <label className="form-label">Current Password</label>
               <input className="form-input" type="password" placeholder="••••••••" style={{ maxWidth: '400px' }} />

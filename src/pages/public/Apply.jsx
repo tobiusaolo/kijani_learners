@@ -122,7 +122,7 @@ export default function Apply() {
       <div className="apply-page">
         <div className="apply-container" style={{ justifyContent: 'center' }}>
           <div className="apply-form-panel card" style={{ maxWidth: 520, textAlign: 'center', padding: '3rem' }}>
-            <Check size={48} color="var(--k-500)" style={{ marginBottom: '1rem' }} />
+            <Check size={48} color="var(--g-500)" style={{ marginBottom: '1rem' }} />
             <h2>Application Submitted!</h2>
             <p className="text-muted" style={{ margin: '1rem 0 2rem' }}>
               We have received your application. You will be notified by email once reviewed.

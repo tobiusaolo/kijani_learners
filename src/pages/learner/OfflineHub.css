@@ -12,8 +12,8 @@
   gap: 2rem;
   padding: 1.5rem 2rem;
   margin-bottom: 2rem;
-  background: var(--k-50);
-  border: 1px solid var(--k-200);
+  background: var(--g-50);
+  border: 1px solid var(--g-200);
 }
 
 .offline-header-left {
@@ -36,7 +36,7 @@
 }
 
 .offline-header-left h3 {
-  color: var(--k-900);
+  color: var(--g-900);
   margin-bottom: 0.5rem;
 }
 
@@ -98,12 +98,12 @@
 .download-card-icon {
   width: 60px;
   height: 60px;
-  background: var(--k-50);
+  background: var(--g-50);
   border-radius: var(--r-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--k-100);
+  border: 1px solid var(--g-100);
 }
 
 .download-meta {

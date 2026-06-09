@@ -29,8 +29,8 @@
 }
 
 .category-btn.active {
-  background: var(--k-100);
-  color: var(--k-800);
+  background: var(--g-100);
+  color: var(--g-800);
   font-weight: 600;
 }
 
@@ -85,12 +85,12 @@
 }
 
 .forum-post-card:hover {
-  border-color: var(--k-300);
+  border-color: var(--g-300);
   box-shadow: var(--shadow-sm);
 }
 
 .forum-post-card.pinned {
-  border-left: 4px solid var(--k-500);
+  border-left: 4px solid var(--g-500);
 }
 
 .post-header {
@@ -147,7 +147,7 @@
 
 .post-title {
   font-size: 1.15rem;
-  color: var(--k-900);
+  color: var(--g-900);
   margin-bottom: var(--sp-2);
 }
 
@@ -188,7 +188,7 @@
 
 .post-action-btn:hover {
   background: var(--grey-100);
-  color: var(--k-600);
+  color: var(--g-600);
 }
 
 .post-action-btn:disabled {
@@ -197,8 +197,8 @@
 }
 
 .post-action-btn.active-like {
-  background: var(--k-100);
-  color: var(--k-700);
+  background: var(--g-100);
+  color: var(--g-700);
 }
 
 .post-action-btn.active-dislike {

@@ -74,7 +74,7 @@ export default function InteractiveScenario() {
                 className="progress-fill" 
                 style={{ 
                   width: `${ecologicalHealth}%`, 
-                  background: ecologicalHealth > 50 ? 'var(--green-500)' : 'var(--error)' 
+                  background: ecologicalHealth > 50 ? 'var(--g-500)' : 'var(--error)' 
                 }} 
               />
             </div>

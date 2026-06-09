@@ -98,7 +98,7 @@ export default function Certificate() {
             {!canDownload && (
               <div className="cert-requirements-banner card">
                 <div className="cert-requirements-header">
-                  <Lock size={20} color="var(--k-600)" />
+                  <Lock size={20} color="var(--g-600)" />
                   <div>
                     <h3>Download requirements</h3>
                     <p className="text-muted text-sm">
@@ -135,7 +135,7 @@ export default function Certificate() {
               <div className="cert-actions-bar">
                 <div className="cert-actions-left">
                   {canDownload ? (
-                    <span className="badge badge-green">✓ Ready to download</span>
+                    <span className="badge badge-success">✓ Ready to download</span>
                   ) : (
                     <span className="badge badge-grey">Preview only</span>
                   )}

@@ -15,7 +15,7 @@
 }
 
 .journey-rail-header h4 {
-  color: var(--k-800);
+  color: var(--g-800);
   margin: 0;
 }
 
@@ -59,17 +59,17 @@
 }
 
 .journey-node--done .journey-node-dot {
-  background: var(--k-500);
-  border-color: var(--k-500);
+  background: var(--g-500);
+  border-color: var(--g-500);
   color: var(--white);
-  box-shadow: 0 0 0 4px var(--k-100);
+  box-shadow: 0 0 0 4px var(--g-100);
 }
 
 .journey-node--current .journey-node-dot {
-  background: var(--k-100);
-  border-color: var(--k-500);
-  color: var(--k-700);
-  box-shadow: 0 0 0 4px rgba(46, 139, 87, 0.2);
+  background: var(--g-100);
+  border-color: var(--g-500);
+  color: var(--g-700);
+  box-shadow: 0 0 0 4px rgba(6, 64, 43, 0.2);
   animation: journey-pulse 2s ease-in-out infinite;
 }
 
@@ -90,16 +90,16 @@
 }
 
 .journey-node--current .journey-node-label {
-  color: var(--k-700);
+  color: var(--g-700);
 }
 
 .journey-node--done .journey-node-label {
-  color: var(--k-600);
+  color: var(--g-600);
 }
 
 @keyframes journey-pulse {
-  0%, 100% { box-shadow: 0 0 0 4px rgba(46, 139, 87, 0.15); }
-  50% { box-shadow: 0 0 0 8px rgba(46, 139, 87, 0.08); }
+  0%, 100% { box-shadow: 0 0 0 4px rgba(6, 64, 43, 0.15); }
+  50% { box-shadow: 0 0 0 8px rgba(6, 64, 43, 0.08); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -115,11 +115,11 @@
   gap: 6px;
   padding: 4px 10px;
   border-radius: var(--r-full);
-  background: linear-gradient(135deg, var(--k-100), var(--k-50));
-  border: 1px solid var(--k-200);
+  background: linear-gradient(135deg, var(--g-100), var(--g-50));
+  border: 1px solid var(--g-200);
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--k-700);
+  color: var(--g-700);
   letter-spacing: 0.02em;
 }
 
@@ -237,7 +237,7 @@
 
 .badge-shelf-header h4 {
   margin: 0;
-  color: var(--k-800);
+  color: var(--g-800);
 }
 
 .badge-shelf-row {
@@ -301,7 +301,7 @@
   display: block;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--k-800);
+  color: var(--g-800);
 }
 
 .badge-grid-desc {
@@ -313,7 +313,7 @@
 }
 
 .mg-complete-glow {
-  box-shadow: 0 0 0 2px var(--k-200), var(--shadow-sm);
+  box-shadow: 0 0 0 2px var(--g-200), var(--shadow-sm);
 }
 
 /* ── Growth chart ── */
@@ -371,7 +371,7 @@
 .growth-bar-value {
   font-size: 0.88rem;
   font-weight: 800;
-  color: var(--k-800);
+  color: var(--g-800);
 }
 
 .growth-delta {
@@ -416,7 +416,7 @@
 
 .notif-panel-header h4 {
   margin: 0;
-  color: var(--k-800);
+  color: var(--g-800);
 }
 
 .notif-list {
@@ -435,7 +435,7 @@
 .notif-item strong {
   display: block;
   font-size: 0.85rem;
-  color: var(--k-800);
+  color: var(--g-800);
 }
 
 .notif-item p {

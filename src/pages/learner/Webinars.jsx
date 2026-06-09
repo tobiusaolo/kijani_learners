@@ -63,7 +63,7 @@ export default function Webinars() {
               </div>
               <div className="webinar-actions">
                 {w.has_rsvped ? (
-                  <span className="badge badge-green"><CheckCircle size={14} /> RSVP'd</span>
+                  <span className="badge badge-success"><CheckCircle size={14} /> RSVP'd</span>
                 ) : (
                   <button className="btn btn-primary btn-sm" disabled={rsvping === w.id} onClick={() => handleRsvp(w.id)}>
                     {rsvping === w.id ? 'Saving…' : 'RSVP'}

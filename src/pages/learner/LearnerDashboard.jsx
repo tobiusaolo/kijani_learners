@@ -22,16 +22,11 @@ import DashboardScene from '../../components/avatars/DashboardScene';
 import '../../components/gamification/gamification.css';
 import './LearnerDashboard.css';
 
-const MODULE_EMOJIS = {
-  1: '🌿', 2: '🤝', 3: '🦁', 4: '🌍', 5: '🛰️', 6: '✨'
-};
-
 export default function LearnerDashboard() {
   const [showOnboarding, setShowOnboarding] = useState(() => !isOnboardingDone());
   const mapModules = (list) =>
     (list || []).map((m) => ({
       ...m,
-      emoji: MODULE_EMOJIS[m.id] || '📚',
       num: String(m.id).padStart(2, '0'),
       progress: m.progress_pct ?? m.progress ?? 0,
     }));
@@ -136,7 +131,7 @@ export default function LearnerDashboard() {
             { icon: Target,     label: 'Current Module',   value: activeModule ? `Module ${activeModule.id}` : 'All done!', sub: activeModule?.title || 'Congratulations', color: 'var(--g-400)' },
           ].map((s, i) => (
             <div key={i} className="dash-stat-card">
-              <div className="dash-stat-icon" style={{ background: `${s.color}18`, color: s.color }}>
+              <div className="dash-stat-icon icon-surface">
                 <s.icon size={20} />
               </div>
               <div>
@@ -169,7 +164,6 @@ export default function LearnerDashboard() {
             <div className="module-progress-list">
               {modules.map(m => (
                 <div key={m.id} className={`module-prog-item ${m.status}`}>
-                  <div className="mod-prog-emoji">{m.emoji}</div>
                   <div className="mod-prog-info">
                     <div className="mod-prog-title">
                       <span className="mod-prog-num">{m.num}</span>
@@ -180,9 +174,9 @@ export default function LearnerDashboard() {
                     </div>
                   </div>
                   <div className="mod-prog-right">
-                    {m.status === 'completed' && <CheckCircle size={18} color="var(--g-500)" />}
+                    {m.status === 'completed' && <span className="icon-surface icon-surface-sm"><CheckCircle size={14} /></span>}
                     {m.status === 'active' && <span className="badge badge-warn" style={{ fontSize: '.7rem' }}>{m.progress || 0}%</span>}
-                    {m.status === 'locked' && <Lock size={16} color="var(--grey-300)" />}
+                    {m.status === 'locked' && <span className="icon-surface icon-surface-sm" style={{ opacity: 0.55 }}><Lock size={14} /></span>}
                   </div>
                 </div>
               ))}
@@ -203,7 +197,6 @@ export default function LearnerDashboard() {
           {activeModule && (
             <div className="card card-brand dash-next-card">
               <div style={{ fontSize: '.75rem', fontWeight: 700, letterSpacing: '.08em', color: 'rgba(255,255,255,.6)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Next Up</div>
-              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{activeModule.emoji}</div>
               <h4 style={{ color: 'var(--white)', marginBottom: '0.25rem' }}>Module {activeModule.id}</h4>
               <p style={{ color: 'rgba(255,255,255,.7)', fontSize: '.88rem', marginBottom: '1rem' }}>{activeModule.title} — {activeModule.progress || 0}% complete</p>
               <div className="progress-bar" style={{ background: 'rgba(255,255,255,.2)', marginBottom: '1rem' }}>
@@ -218,7 +211,7 @@ export default function LearnerDashboard() {
           <div className="card" style={{ marginTop: '1.25rem' }}>
             <div className="dash-card-header">
               <h4>Upcoming Webinar</h4>
-              <Calendar size={16} color="var(--g-500)" />
+              <span className="icon-surface icon-surface-sm"><Calendar size={14} /></span>
             </div>
             {nextWebinar ? (
               <>
@@ -257,7 +250,7 @@ export default function LearnerDashboard() {
                 { icon: MessageSquare, label: 'Discussion Forum', to: '/learn/forum' },
               ].map(({ icon: Icon, label, to }) => (
                 <Link key={to} to={to} className="quick-link-item">
-                  <div className="quick-link-icon"><Icon size={16} /></div>
+                  <div className="quick-link-icon icon-surface"><Icon size={16} /></div>
                   <span>{label}</span>
                   <ArrowRight size={14} style={{ marginLeft: 'auto' }} />
                 </Link>

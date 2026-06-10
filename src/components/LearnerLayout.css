@@ -60,14 +60,7 @@
 .sidebar-brand-mark {
   width: 40px;
   height: 40px;
-  flex-shrink: 0;
-  background: var(--white);
   border-radius: var(--r-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--g-600);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .sidebar-brand-copy {
@@ -282,29 +275,17 @@
   background: var(--k-300);
 }
 
-.sidebar-nav-link.is-active .sidebar-nav-icon {
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--white);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
 .sidebar-nav-icon {
   width: 34px;
   height: 34px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: var(--r-sm);
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.7);
   border: 1px solid transparent;
-  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
 }
 
+.sidebar-nav-link.is-active .sidebar-nav-icon,
 .sidebar-nav-link:hover .sidebar-nav-icon {
-  background: rgba(255, 255, 255, 0.14);
-  color: var(--white);
+  box-shadow: 0 4px 12px rgba(103, 71, 54, 0.35);
 }
 
 .sidebar-nav-text {
@@ -456,21 +437,16 @@
 .topbar-icon-btn {
   width: 40px;
   height: 40px;
-  background: var(--grey-100);
   border: none;
   border-radius: var(--r-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--grey-600);
   cursor: pointer;
   transition: all var(--t-fast);
   position: relative;
 }
 
 .topbar-icon-btn:hover {
-  background: var(--g-100);
-  color: var(--g-600);
+  box-shadow: 0 4px 14px rgba(103, 71, 54, 0.4);
+  transform: translateY(-1px);
 }
 
 .topbar-avatar-wrap {

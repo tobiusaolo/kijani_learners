@@ -26,13 +26,8 @@
 .wifi-icon-wrap {
   width: 52px;
   height: 52px;
-  background: var(--white);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  box-shadow: var(--shadow-sm);
 }
 
 .offline-header-left h3 {
@@ -98,12 +93,10 @@
 .download-card-icon {
   width: 60px;
   height: 60px;
-  background: var(--g-50);
   border-radius: var(--r-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--g-100);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
 }
 
 .download-meta {

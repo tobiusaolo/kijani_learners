@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Leaf, Eye, EyeOff, ArrowRight, CheckCircle, AlertCircle, Lock } from 'lucide-react';
 import apiClient from '../../api/client';
+import AppFooter from '../../components/AppFooter';
 import './Auth.css';
 
 export default function ResetPassword() {
@@ -19,17 +20,20 @@ export default function ResetPassword() {
   // No token in URL — show helpful error
   if (!token) {
     return (
-      <div className="auth-page" style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{ textAlign: 'center', maxWidth: 400, padding: '2rem' }}>
-          <AlertCircle size={48} color="#ef4444" style={{ marginBottom: '1rem' }} />
-          <h2 style={{ marginBottom: '0.5rem' }}>Invalid Reset Link</h2>
-          <p style={{ color: 'var(--grey-500)', marginBottom: '1.5rem' }}>
-            This reset link is missing or malformed. Please request a new one.
-          </p>
-          <Link to="/forgot-password" className="btn btn-primary" style={{ textDecoration: 'none' }}>
-            Request New Link
-          </Link>
+      <div className="auth-page">
+        <div className="auth-page-main" style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', maxWidth: 400, padding: '2rem' }}>
+            <span className="icon-surface icon-surface-lg" style={{ marginBottom: '1rem' }}><AlertCircle size={26} /></span>
+            <h2 style={{ marginBottom: '0.5rem' }}>Invalid Reset Link</h2>
+            <p style={{ color: 'var(--grey-500)', marginBottom: '1.5rem' }}>
+              This reset link is missing or malformed. Please request a new one.
+            </p>
+            <Link to="/forgot-password" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+              Request New Link
+            </Link>
+          </div>
         </div>
+        <AppFooter variant="compact" />
       </div>
     );
   }
@@ -61,10 +65,11 @@ export default function ResetPassword() {
 
   return (
     <div className="auth-page">
+      <div className="auth-page-main">
       <div className="auth-left">
         <div className="auth-left-inner">
           <Link to="/" className="auth-logo">
-            <div className="auth-logo-icon"><Leaf size={20} /></div>
+            <div className="auth-logo-icon icon-surface"><Leaf size={20} /></div>
             <div>
               <span className="auth-logo-name">Kijani Terrascape</span>
               <span className="auth-logo-sub">Digital Learning Journey</span>
@@ -88,7 +93,7 @@ export default function ResetPassword() {
 
           {success ? (
             <div style={{ textAlign: 'center', padding: '1rem 0' }}>
-              <CheckCircle size={52} color="#16a34a" style={{ marginBottom: '1.25rem' }} />
+              <span className="icon-surface icon-surface-lg" style={{ marginBottom: '1.25rem' }}><CheckCircle size={28} /></span>
               <h2 style={{ marginBottom: '0.5rem', color: 'var(--g-900)' }}>Password Updated!</h2>
               <p style={{ color: 'var(--grey-500)', lineHeight: 1.6 }}>
                 Your password has been changed. A confirmation email has been sent to you.
@@ -128,7 +133,7 @@ export default function ResetPassword() {
                   {/* Strength indicator */}
                   {password && (
                     <div style={{ marginTop: '0.4rem', display: 'flex', gap: '4px' }}>
-                      {['var(--error)', '#f59e0b', '#16a34a'].map((color, i) => (
+                      {['var(--error)', '#f59e0b', 'var(--k-500)'].map((color, i) => (
                         <div key={i} style={{
                           flex: 1, height: 4, borderRadius: 2,
                           background: password.length >= (i + 1) * 4 ? color : 'var(--grey-200)',
@@ -168,6 +173,8 @@ export default function ResetPassword() {
           )}
         </div>
       </div>
+      </div>
+      <AppFooter variant="compact" />
     </div>
   );
 }

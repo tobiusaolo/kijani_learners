@@ -16,7 +16,7 @@ export default function InteractiveScenario() {
   return (
     <div className="scenario-block">
       <div className="scenario-header">
-        <div className="scenario-icon"><Target size={20} /></div>
+        <div className="scenario-icon icon-surface"><Target size={20} /></div>
         <div>
           <h3>Interactive Scenario: The Trade-off Matrix</h3>
           <p className="text-sm text-muted">Adjust the management policies for the Kijani Reserve to find a balance between ecological health and community income.</p>

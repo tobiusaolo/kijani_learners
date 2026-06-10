@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Leaf, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import AppFooter from '../../components/AppFooter';
 import './Auth.css';
 
 const steps = ['Personal Info', 'Background', 'Commitment'];
@@ -68,10 +69,11 @@ export default function Register() {
 
   return (
     <div className="auth-page">
+      <div className="auth-page-main">
       <div className="auth-left">
         <div className="auth-left-inner">
           <Link to="/" className="auth-logo">
-            <div className="auth-logo-icon"><Leaf size={20} /></div>
+            <div className="auth-logo-icon icon-surface"><Leaf size={20} /></div>
             <div>
               <span className="auth-logo-name">Kijani Terrascape</span>
               <span className="auth-logo-sub">Digital Learning Journey</span>
@@ -89,7 +91,7 @@ export default function Register() {
             <div className="auth-features">
               {['Open to all African youth', '50% female participation target', 'Self-paced, mobile-friendly', 'Certificate upon completion'].map((f, i) => (
                 <div key={i} className="auth-feature-item">
-                  <Check size={14} color="var(--g-300)" />
+                  <span className="icon-surface icon-surface-sm"><Check size={12} /></span>
                   <span>{f}</span>
                 </div>
               ))}
@@ -244,6 +246,8 @@ export default function Register() {
           </p>
         </div>
       </div>
+      </div>
+      <AppFooter variant="compact" />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Leaf, Eye, EyeOff, ArrowRight, CheckCircle } from 'lucide-react';
+import { Leaf, Eye, EyeOff, ArrowRight, CheckCircle, Check } from 'lucide-react';
+import AppFooter from '../../components/AppFooter';
 import './Auth.css';
 
 export default function Login() {
@@ -31,10 +32,11 @@ export default function Login() {
 
   return (
     <div className="auth-page">
+      <div className="auth-page-main">
       <div className="auth-left">
         <div className="auth-left-inner">
           <Link to="/" className="auth-logo">
-            <div className="auth-logo-icon"><Leaf size={20} /></div>
+            <div className="auth-logo-icon icon-surface"><Leaf size={20} /></div>
             <div>
               <span className="auth-logo-name">Kijani Terrascape</span>
               <span className="auth-logo-sub">Digital Learning Journey</span>
@@ -52,7 +54,7 @@ export default function Login() {
             <div className="auth-features">
               {['Immersive 6-module curriculum', 'Systems thinking framework', 'African conservation case studies', 'Digital storytelling hub'].map((f, i) => (
                 <div key={i} className="auth-feature-item">
-                  <span className="auth-feature-dot" />
+                  <span className="icon-surface icon-surface-sm"><Check size={12} /></span>
                   <span>{f}</span>
                 </div>
               ))}
@@ -70,7 +72,7 @@ export default function Login() {
 
           <form className="auth-form" onSubmit={handleSubmit}>
             {resetSuccess && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', padding: '10px 14px', marginBottom: '1rem', fontSize: '.85rem', color: '#166534' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--k-50)', border: '1px solid var(--k-200)', borderRadius: '8px', padding: '10px 14px', marginBottom: '1rem', fontSize: '.85rem', color: 'var(--k-700)' }}>
                 <CheckCircle size={15} /> Password updated successfully. Please sign in.
               </div>
             )}
@@ -133,6 +135,8 @@ export default function Login() {
           </div>
         </div>
       </div>
+      </div>
+      <AppFooter variant="compact" />
     </div>
   );
 }

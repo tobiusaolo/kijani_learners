@@ -93,7 +93,7 @@ export default function Assessment() {
     return (
       <LearnerLayout title={title} subtitle={subtitle}>
         <div style={{ textAlign: 'center', padding: '4rem' }}>
-          <Loader size={32} className="spin" style={{ color: 'var(--g-500)' }} />
+          <span className="icon-surface icon-surface-md"><Loader size={24} className="spin" /></span>
           <p style={{ marginTop: '1rem', color: 'var(--grey-600)' }}>Loading assessment…</p>
         </div>
       </LearnerLayout>
@@ -104,7 +104,7 @@ export default function Assessment() {
     return (
       <LearnerLayout title={title} subtitle={subtitle}>
         <div className="card" style={{ textAlign: 'center', padding: '3rem' }}>
-          <CheckCircle size={48} color="var(--g-500)" style={{ marginBottom: '1rem' }} />
+          <span className="icon-surface icon-surface-lg" style={{ marginBottom: '1rem' }}><CheckCircle size={28} /></span>
           <h2>{isEndline ? 'Endline' : 'Baseline'} assessment already completed</h2>
           <p className="text-muted" style={{ margin: '1rem 0 2rem' }}>
             You have already submitted this assessment. Thank you!
@@ -122,7 +122,7 @@ export default function Assessment() {
           <>
             <div className="card" style={{ marginBottom: '1.5rem', background: 'var(--g-50)', borderColor: 'var(--g-200)' }}>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <Info size={24} color="var(--g-600)" />
+                <span className="icon-surface icon-surface-sm"><Info size={16} /></span>
                 <div>
                   <h4 style={{ color: 'var(--g-800)', marginBottom: '0.5rem' }}>
                     {isEndline ? 'Endline Systems Thinking Survey' : 'Welcome to your Baseline Assessment'}
@@ -177,7 +177,7 @@ export default function Assessment() {
           </>
         ) : (
           <div className="card" style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-            <CheckCircle size={48} color="var(--g-500)" style={{ marginBottom: '1rem' }} />
+            <span className="icon-surface icon-surface-lg" style={{ marginBottom: '1rem' }}><CheckCircle size={28} /></span>
             <h2>Assessment Completed!</h2>
             {score !== null && (
               <p style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--g-700)', margin: '1rem 0' }}>

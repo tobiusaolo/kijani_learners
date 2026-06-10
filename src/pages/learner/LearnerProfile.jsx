@@ -78,15 +78,15 @@ export default function LearnerProfile() {
             
             <div className="profile-info-list">
               <div className="profile-info-item">
-                <Mail size={16} color="var(--grey-400)" />
+                <span className="icon-surface icon-surface-sm"><Mail size={12} /></span>
                 <span>{profile.email || '—'}</span>
               </div>
               <div className="profile-info-item">
-                <MapPin size={16} color="var(--grey-400)" />
+                <span className="icon-surface icon-surface-sm"><MapPin size={12} /></span>
                 <span>{profile.country || '—'} {profile.region ? `(${profile.region})` : ''}</span>
               </div>
               <div className="profile-info-item">
-                <Briefcase size={16} color="var(--grey-400)" />
+                <span className="icon-surface icon-surface-sm"><Briefcase size={12} /></span>
                 <span>{profile.background || '—'}</span>
               </div>
             </div>

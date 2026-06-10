@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Play, Users, BookOpen, Award, ChevronDown, Globe, Leaf, Zap, Shield, Star, MapPin } from 'lucide-react';
+import AppFooter from '../../components/AppFooter';
 import './Landing.css';
 
 const modules = [
-  { num: '01', title: 'Area-Based Conservation', desc: 'Protected areas as dynamic governance systems — national parks, community conserved areas, and beyond.', color: '#06402B', icon: '🌿' },
-  { num: '02', title: 'Conservation & Society', desc: 'Human dimensions — culture, indigenous knowledge, gender equity, environmental justice.', color: '#674736', icon: '🤝' },
-  { num: '03', title: 'Species Conservation', desc: 'Ecological science and public perception — population dynamics, keystone species, wildlife trade.', color: '#2a6649', icon: '🦁' },
-  { num: '04', title: 'Nature & Climate', desc: 'Biodiversity meets climate resilience — mangrove restoration, watershed management, agroforestry.', color: '#5a3d2f', icon: '🌍' },
-  { num: '05', title: 'Conservation Technologies', desc: 'Digital innovation — drones, AI species recognition, satellite monitoring, citizen science.', color: '#043528', icon: '🛰️' },
-  { num: '06', title: 'Digital Storytelling', desc: 'Synthesise all learning into advocacy outputs. Your voice, your conservation story.', color: '#674736', icon: '✨' },
+  { num: '01', title: 'Area-Based Conservation', desc: 'Protected areas as dynamic governance systems — national parks, community conserved areas, and beyond.', color: '#06402B' },
+  { num: '02', title: 'Conservation & Society', desc: 'Human dimensions — culture, indigenous knowledge, gender equity, environmental justice.', color: '#674736' },
+  { num: '03', title: 'Species Conservation', desc: 'Ecological science and public perception — population dynamics, keystone species, wildlife trade.', color: '#2a6649' },
+  { num: '04', title: 'Nature & Climate', desc: 'Biodiversity meets climate resilience — mangrove restoration, watershed management, agroforestry.', color: '#5a3d2f' },
+  { num: '05', title: 'Conservation Technologies', desc: 'Digital innovation — drones, AI species recognition, satellite monitoring, citizen science.', color: '#043528' },
+  { num: '06', title: 'Digital Storytelling', desc: 'Synthesise all learning into advocacy outputs. Your voice, your conservation story.', color: '#674736' },
 ];
 
 const stats = [
@@ -41,7 +42,7 @@ export default function Landing() {
       <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-inner">
           <Link to="/" className="nav-logo">
-            <div className="nav-logo-icon"><Leaf size={18} /></div>
+            <div className="nav-logo-icon icon-surface"><Leaf size={18} /></div>
             <div>
               <span className="nav-logo-name">Kijani</span>
               <span className="nav-logo-sub">Terrascape</span>
@@ -49,7 +50,6 @@ export default function Landing() {
           </Link>
           <div className="nav-links">
             <a href="#modules">Modules</a>
-            <a href="#about">About</a>
             <a href="#stories">Stories</a>
             <Link to="/apply" className="btn btn-sm nav-apply-btn">Apply Now</Link>
             <Link to="/login" className="btn btn-primary btn-sm">Sign In</Link>
@@ -88,7 +88,7 @@ export default function Landing() {
           <div className="hero-stats animate-fade-up delay-400">
             {stats.map(({ value, label, icon: Icon }) => (
               <div key={label} className="hero-stat">
-                <div className="hero-stat-icon"><Icon size={16} /></div>
+                <div className="hero-stat-icon icon-surface"><Icon size={16} /></div>
                 <span className="hero-stat-value">{value}</span>
                 <span className="hero-stat-label">{label}</span>
               </div>
@@ -99,33 +99,6 @@ export default function Landing() {
         {/* Scroll indicator */}
         <div className="scroll-hint">
           <ChevronDown size={20} />
-        </div>
-      </section>
-
-      {/* Balance Ring Section */}
-      <section className="balance-section" id="about">
-        <div className="container">
-          <div className="balance-grid">
-            <div className="balance-text">
-              <div className="section-tag">The Framework</div>
-              <h2>The Terrascape<br /><span style={{ color: 'var(--k-400)' }}>Balance Ring</span></h2>
-              <p>An adapted socioecological systems framework that enables learners to examine trade-offs between environmental limits and social foundations — five interconnected conservation themes in one holistic view.</p>
-              <ul className="balance-list">
-                {['Area-Based Conservation', 'Conservation & Society', 'Species Conservation', 'Nature & Climate', 'Conservation Technologies'].map((item, i) => (
-                  <li key={i}>
-                    <span className="balance-dot" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/apply" className="btn btn-primary" style={{ marginTop: '1.5rem' }}>
-                Explore the Journey <ArrowRight size={16} />
-              </Link>
-            </div>
-            <div className="balance-ring-wrap">
-              <BalanceRingSVG />
-            </div>
-          </div>
         </div>
       </section>
 
@@ -145,7 +118,6 @@ export default function Landing() {
                 onClick={() => setActiveModule(i)}
               >
                 <div className="module-card-num" style={{ color: mod.color }}>{mod.num}</div>
-                <div className="module-card-emoji">{mod.icon}</div>
                 <h4 className="module-card-title">{mod.title}</h4>
                 <p className="module-card-desc">{mod.desc}</p>
                 <div className="module-card-tag">
@@ -217,7 +189,7 @@ export default function Landing() {
         <div className="container">
           <div className="cta-card">
             <div className="cta-orb" />
-            <Shield size={40} color="var(--k-300)" style={{ marginBottom: '1rem' }} />
+            <span className="icon-surface icon-surface-lg" style={{ marginBottom: '1rem' }}><Shield size={26} /></span>
             <h2>Ready to Shape Conservation?</h2>
             <p>Join 100 African youth on a transformative digital learning journey.</p>
             <div className="cta-btns">
@@ -230,118 +202,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="landing-footer">
-        <div className="container">
-          <div className="footer-top">
-            <div className="footer-brand">
-              <div className="nav-logo">
-                <div className="nav-logo-icon"><Leaf size={16} /></div>
-                <div>
-                  <span className="nav-logo-name">Kijani Terrascape</span>
-                </div>
-              </div>
-              <p>Strengthening systems thinking and integrated conservation literacy among African youth.</p>
-
-            </div>
-            <div className="footer-links">
-              <div className="footer-col">
-                <span className="footer-col-title">Platform</span>
-                <Link to="/apply">Apply</Link>
-                <Link to="/login">Sign In</Link>
-                <a href="#modules">Modules</a>
-              </div>
-              <div className="footer-col">
-                <span className="footer-col-title">Resources</span>
-                <a href="#">FAQ</a>
-                <a href="#">Support</a>
-                <a href="#">Privacy Policy</a>
-              </div>
-              <div className="footer-col">
-                <span className="footer-col-title">Organisation</span>
-                <a href="#">terrascapes.org</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
-              </div>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <span>© 2026 Kijani Terrascape · terrascapes.org</span>
-            <span>Built for African Youth Conservation Leaders</span>
-          </div>
-        </div>
-      </footer>
+      <AppFooter variant="full" />
     </div>
-  );
-}
-
-function BalanceRingSVG() {
-  const themes = [
-    { label: 'Area-Based\nConservation', angle: -90, emoji: '🌿' },
-    { label: 'Conservation\n& Society', angle: -18, emoji: '🤝' },
-    { label: 'Species\nConservation', angle: 54, emoji: '🦁' },
-    { label: 'Nature &\nClimate', angle: 126, emoji: '🌍' },
-    { label: 'Conservation\nTech', angle: 198, emoji: '🛰️' },
-  ];
-
-  return (
-    <svg viewBox="0 0 400 400" className="balance-ring-svg">
-      {/* Outer decorative rings */}
-      <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(6,64,43,.08)" strokeWidth="1" />
-      <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(6,64,43,.12)" strokeWidth="1" />
-
-      {/* Connection lines */}
-      {themes.map((t, i) => {
-        const angle = (t.angle * Math.PI) / 180;
-        const x = 200 + 130 * Math.cos(angle);
-        const y = 200 + 130 * Math.sin(angle);
-        return themes.slice(i + 1).map((t2, j) => {
-          const angle2 = (t2.angle * Math.PI) / 180;
-          const x2 = 200 + 130 * Math.cos(angle2);
-          const y2 = 200 + 130 * Math.sin(angle2);
-          return (
-            <line key={`${i}-${j}`} x1={x} y1={y} x2={x2} y2={y2}
-              stroke="rgba(6,64,43,.15)" strokeWidth="1" strokeDasharray="4 4" />
-          );
-        });
-      })}
-
-      {/* Center circle */}
-      <circle cx="200" cy="200" r="52" fill="url(#centerGrad)" />
-      <text x="200" y="196" textAnchor="middle" fill="white" fontSize="11" fontWeight="700" fontFamily="Inter">BALANCE</text>
-      <text x="200" y="210" textAnchor="middle" fill="rgba(255,255,255,.7)" fontSize="9" fontFamily="Inter">RING</text>
-
-      {/* Theme nodes */}
-      {themes.map((t, i) => {
-        const angle = (t.angle * Math.PI) / 180;
-        const x = 200 + 130 * Math.cos(angle);
-        const y = 200 + 130 * Math.sin(angle);
-        const lx = 200 + 178 * Math.cos(angle);
-        const ly = 200 + 178 * Math.sin(angle);
-        return (
-          <g key={i}>
-            <circle cx={x} cy={y} r="28" fill="url(#nodeGrad)" stroke="rgba(103,71,54,.45)" strokeWidth="1.5" />
-            <text x={x} y={y + 5} textAnchor="middle" fontSize="16">{t.emoji}</text>
-            {t.label.split('\n').map((line, li) => (
-              <text key={li} x={lx} y={ly + (li - 0.5) * 13}
-                textAnchor="middle" fill="var(--k-600)" fontSize="9.5" fontWeight="600" fontFamily="Inter">
-                {line}
-              </text>
-            ))}
-          </g>
-        );
-      })}
-
-      <defs>
-        <radialGradient id="centerGrad" cx="40%" cy="35%">
-          <stop offset="0%" stopColor="#2a6649" />
-          <stop offset="100%" stopColor="#032820" />
-        </radialGradient>
-        <radialGradient id="nodeGrad" cx="40%" cy="35%">
-          <stop offset="0%" stopColor="#674736" />
-          <stop offset="100%" stopColor="#032820" />
-        </radialGradient>
-      </defs>
-    </svg>
   );
 }

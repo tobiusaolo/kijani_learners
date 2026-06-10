@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Leaf, Check, ArrowRight, ArrowLeft, Loader } from 'lucide-react';
 import { submitApplication } from '../../api/learnerApi';
 import { showSuccess, showError, apiErrorMessage } from '../../utils/swal';
+import AppFooter from '../../components/AppFooter';
 import './Apply.css';
 
 const STORAGE_KEY = 'kijani_apply_draft';
@@ -122,7 +123,7 @@ export default function Apply() {
       <div className="apply-page">
         <div className="apply-container" style={{ justifyContent: 'center' }}>
           <div className="apply-form-panel card" style={{ maxWidth: 520, textAlign: 'center', padding: '3rem' }}>
-            <Check size={48} color="var(--g-500)" style={{ marginBottom: '1rem' }} />
+            <span className="icon-surface icon-surface-lg" style={{ marginBottom: '1rem' }}><Check size={28} /></span>
             <h2>Application Submitted!</h2>
             <p className="text-muted" style={{ margin: '1rem 0 2rem' }}>
               We have received your application. You will be notified by email once reviewed.
@@ -138,7 +139,7 @@ export default function Apply() {
     <div className="apply-page">
       <nav className="apply-nav">
         <Link to="/" className="apply-logo">
-          <div className="apply-logo-icon"><Leaf size={18} /></div>
+          <div className="apply-logo-icon icon-surface"><Leaf size={18} /></div>
           <span>Kijani Terrascape</span>
         </Link>
         <Link to="/login" className="btn btn-outline btn-sm">Sign In</Link>
@@ -347,6 +348,7 @@ export default function Apply() {
           </div>
         </div>
       </div>
+      <AppFooter variant="compact" />
     </div>
   );
 }

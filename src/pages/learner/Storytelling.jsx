@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Upload, FileText, Image as ImageIcon, CheckCircle, Video, Mic, Info, Loader } from 'lucide-react';
+import { Upload, FileText, Image as ImageIcon, CheckCircle, Video, Mic, Info, Loader, Sparkles } from 'lucide-react';
 import LearnerLayout from '../../components/LearnerLayout';
 import { getMyStory, submitStory } from '../../api/cachedLearnerApi';
 import { uploadFile } from '../../api/learnerApi';
@@ -152,7 +152,7 @@ export default function Storytelling() {
       <div className="storytelling-layout">
         <div className="story-main">
           <div className="card story-intro-card">
-            <div className="story-intro-icon">✨</div>
+            <span className="story-intro-icon icon-surface icon-surface-lg"><Sparkles size={26} /></span>
             <div>
               <h3>Your Conservation Story</h3>
               <p>Translate systems thinking insights into public communication products for your context.</p>
@@ -165,7 +165,7 @@ export default function Storytelling() {
               <div style={{ textAlign: 'center', padding: '2rem' }}><Loader size={24} className="spin" /></div>
             ) : myStory && myStory.status !== 'draft' ? (
               <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--grey-50)', borderRadius: 'var(--r-md)' }}>
-                <CheckCircle size={48} color="var(--g-500)" style={{ margin: '0 auto 1rem' }} />
+                <span className="icon-surface icon-surface-lg" style={{ margin: '0 auto 1rem' }}><CheckCircle size={28} /></span>
                 <h3>Story Submitted!</h3>
                 <p style={{ color: 'var(--grey-600)', marginTop: '0.5rem' }}>
                   &quot;{myStory.title}&quot; — <strong>{myStory.status}</strong>
@@ -203,7 +203,7 @@ export default function Storytelling() {
                           format: f.id,
                           ...(s.format !== f.id && f.id !== 'text' ? { file_url: '' } : {}),
                         }))}>
-                        <f.icon size={20} /><span>{f.label}</span>
+                        <span className="icon-surface icon-surface-sm"><f.icon size={14} /></span><span>{f.label}</span>
                       </div>
                     ))}
                   </div>
@@ -221,7 +221,7 @@ export default function Storytelling() {
                     <input ref={fileRef} type="file" accept=".pdf,.mp3,.mp4,.png,.jpg,.jpeg,.webp" style={{ display: 'none' }}
                       onChange={handleFileUpload} />
                     <div className="story-upload-zone" onClick={() => !uploading && fileRef.current?.click()} style={{ cursor: uploading ? 'wait' : 'pointer' }}>
-                      <Upload size={32} color="var(--g-400)" />
+                      <span className="icon-surface icon-surface-md"><Upload size={22} /></span>
                       <p style={{ marginTop: '0.5rem', fontWeight: 600 }}>
                         {uploading ? 'Uploading…' : submission.file_url ? 'Upload another file' : 'Click to upload'}
                       </p>
@@ -255,7 +255,7 @@ export default function Storytelling() {
         <div className="story-sidebar">
           <div className="card">
             <h4 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Info size={18} color="var(--g-500)" /> Guidelines
+              <span className="icon-surface icon-surface-sm"><Info size={14} /></span> Guidelines
             </h4>
             <ul className="story-guidelines">
               <li>Integrate at least <strong>two</strong> curriculum themes.</li>

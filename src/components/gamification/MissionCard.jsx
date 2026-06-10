@@ -7,7 +7,7 @@ export default function MissionCard({ mission }) {
   return (
     <div className="mission-card card">
       <div className="mission-card-header">
-        <Target size={18} color="var(--k-500)" />
+        <span className="icon-surface icon-surface-sm"><Target size={14} /></span>
         <span>Next mission</span>
       </div>
       <div className="mission-card-body">

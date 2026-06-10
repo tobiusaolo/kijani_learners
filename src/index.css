@@ -163,16 +163,16 @@ a:hover { color: var(--g-500); }
 .btn:active { transform: scale(.98); }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--g-600), var(--g-400));
-  color: var(--white); box-shadow: var(--shadow-primary);
+  background: linear-gradient(135deg, var(--k-600), var(--k-400));
+  color: var(--white); box-shadow: var(--shadow-brand);
 }
-.btn-primary:hover { box-shadow: 0 6px 30px rgba(6,64,43,.4); transform: translateY(-1px); }
+.btn-primary:hover { box-shadow: 0 6px 30px rgba(103,71,54,.4); transform: translateY(-1px); }
 
 .btn-outline {
-  background: transparent; color: var(--g-600);
-  border: 2px solid var(--g-500);
+  background: transparent; color: var(--k-600);
+  border: 2px solid var(--k-500);
 }
-.btn-outline:hover { background: var(--g-50); }
+.btn-outline:hover { background: var(--k-50); }
 
 .btn-warm {
   background: linear-gradient(135deg, var(--k-600), var(--k-400));
@@ -193,6 +193,26 @@ a:hover { color: var(--g-500); }
 .btn-sm { padding: 8px 16px; font-size: .8125rem; border-radius: var(--r-sm); }
 .btn-lg { padding: 16px 32px; font-size: 1.0625rem; border-radius: var(--r-lg); }
 .btn-icon { padding: 10px; border-radius: var(--r-md); }
+
+/* ── Icon surfaces — white glyphs on coffee brown ── */
+.icon-surface {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--k-600), var(--k-400));
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(103, 71, 54, 0.28);
+}
+
+.icon-surface svg {
+  color: inherit;
+  stroke: currentColor;
+}
+
+.icon-surface-sm { width: 28px; height: 28px; border-radius: var(--r-sm); }
+.icon-surface-md { width: 40px; height: 40px; border-radius: var(--r-md); }
+.icon-surface-lg { width: 56px; height: 56px; border-radius: var(--r-lg); }
 
 /* ── Cards ── */
 .card {

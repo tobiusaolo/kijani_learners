@@ -42,7 +42,7 @@ export default function Webinars() {
       ) : webinars.length === 0 ? (
         <div className="webinars-page">
           <div className="card webinars-empty">
-            <Video size={40} color="var(--grey-400)" />
+            <span className="icon-surface icon-surface-md"><Video size={24} /></span>
             <h3>No webinars scheduled yet</h3>
             <p className="text-muted">Check back soon for reflection webinar dates.</p>
           </div>

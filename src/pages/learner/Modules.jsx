@@ -6,10 +6,6 @@ import { getModules } from '../../api/cachedLearnerApi';
 import { cachedData, showPageLoading } from '../../utils/staleLoad';
 import './Modules.css';
 
-const MODULE_EMOJIS = {
-  1: '🌿', 2: '🤝', 3: '🦁', 4: '🌍', 5: '🛰️', 6: '✨'
-};
-
 const MODULE_COLORS = {
   1: '#06402B', 2: '#674736', 3: '#2a6649', 4: '#5a3d2f', 5: '#043528', 6: '#674736'
 };
@@ -18,7 +14,6 @@ export default function Modules() {
   const mapMods = (list) =>
     (list || []).map((m) => ({
       ...m,
-      emoji: MODULE_EMOJIS[m.id] || '📚',
       color: MODULE_COLORS[m.id] || '#06402B',
       num: String(m.id).padStart(2, '0'),
       progress: m.progress_pct ?? m.progress ?? 0,
@@ -48,10 +43,9 @@ export default function Modules() {
               <div className="mg-card-top" style={{ borderTopColor: m.color }}>
                 <div className="mg-header">
                   <span className="mg-num" style={{ color: m.color }}>MODULE {m.num}</span>
-                  {m.status === 'completed' && <CheckCircle size={18} color="var(--g-500)" />}
-                  {m.status === 'locked' && <Lock size={16} color="var(--grey-400)" />}
+                  {m.status === 'completed' && <span className="icon-surface icon-surface-sm"><CheckCircle size={14} /></span>}
+                  {m.status === 'locked' && <span className="icon-surface icon-surface-sm" style={{ opacity: 0.55 }}><Lock size={14} /></span>}
                 </div>
-                <div className="mg-emoji">{m.emoji}</div>
                 <h3 className="mg-title">{m.title}</h3>
                 <p className="mg-desc">{m.description || m.desc || 'A module in the Kijani learning journey.'}</p>
                 {m.status === 'locked' && m.lock_reason && (

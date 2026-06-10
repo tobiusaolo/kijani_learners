@@ -19,13 +19,7 @@
 .scenario-icon {
   width: 40px;
   height: 40px;
-  background: var(--white);
   border-radius: var(--r-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--g-600);
-  box-shadow: var(--shadow-sm);
   flex-shrink: 0;
 }
 

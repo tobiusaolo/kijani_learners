@@ -1,0 +1,129 @@
+/* ============================================================
+   APP FOOTER — shared across all learner pages
+   ============================================================ */
+
+.app-footer--full {
+  background: var(--soft-black);
+  padding: var(--sp-16) 0 var(--sp-8);
+}
+
+.app-footer-top {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--sp-12);
+  margin-bottom: var(--sp-10);
+}
+
+.app-footer-brand p {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: var(--sp-4) 0 0;
+}
+
+.app-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+}
+
+.app-footer-logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+}
+
+.app-footer-logo-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--white);
+  font-size: 1rem;
+}
+
+.app-footer-links {
+  display: flex;
+  gap: var(--sp-10);
+}
+
+.app-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.app-footer-col-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--k-400);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--sp-1);
+}
+
+.app-footer-col a {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color var(--t-fast);
+  text-decoration: none;
+}
+
+.app-footer-col a:hover {
+  color: var(--k-300);
+}
+
+.app-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--sp-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Compact footer — auth, apply, learner app pages */
+.app-footer--compact {
+  background: var(--soft-black);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: var(--sp-4) var(--sp-6);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.app-footer-compact-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.app-footer-compact-tagline {
+  color: var(--k-400);
+}
+
+@media (max-width: 1024px) {
+  .app-footer-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-footer-links {
+    flex-direction: column;
+    gap: var(--sp-6);
+  }
+
+  .app-footer-bottom,
+  .app-footer-compact-inner {
+    flex-direction: column;
+    gap: var(--sp-2);
+    text-align: center;
+  }
+}

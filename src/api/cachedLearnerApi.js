@@ -96,8 +96,13 @@ export function prefetchLearnerData() {
 // ─── Read endpoints (cached) ─────────────────────────────────
 export const getMe = () => fetchCached('profile:me', learnerApi.getMe, 'profile');
 export const getModules = () => fetchCached('modules:list', learnerApi.getModules, 'modules');
-export const getModuleDetail = (moduleId) =>
-  fetchCached(`modules:detail:${moduleId}`, () => learnerApi.getModuleDetail(moduleId), 'modules');
+export const getModuleDetail = (moduleId, options = {}) =>
+  fetchCached(
+    `modules:detail:${moduleId}`,
+    () => learnerApi.getModuleDetail(moduleId),
+    'modules',
+    options,
+  );
 export const getOfflinePacks = () => fetchCached('offline:packs', learnerApi.getOfflinePacks, 'offline');
 export const getMyStory = () => fetchCached('story:mine', learnerApi.getMyStory, 'stories');
 export const getForumPosts = (moduleId = '') => {
@@ -111,10 +116,10 @@ export const getCertificate = () => fetchCached('certificate:me', learnerApi.get
 export const getAssessmentInstrument = (type) =>
   fetchCached(`assessments:instrument:${type}`, () => learnerApi.getAssessmentInstrument(type), 'assessments');
 export const getMyAssessments = () => fetchCached('assessments:my', learnerApi.getMyAssessments, 'assessments');
-export const getQuizForTake = (quizId) =>
-  fetchCached(`quizzes:take:${quizId}`, () => learnerApi.getQuizForTake(quizId), 'modules');
-export const getMyQuizAttempts = (quizId) =>
-  fetchCached(`quizzes:attempts:${quizId}`, () => learnerApi.getMyQuizAttempts(quizId), 'modules');
+export const getQuizForTake = (quizId, options = {}) =>
+  fetchCached(`quizzes:take:${quizId}`, () => learnerApi.getQuizForTake(quizId), 'modules', options);
+export const getMyQuizAttempts = (quizId, options = {}) =>
+  fetchCached(`quizzes:attempts:${quizId}`, () => learnerApi.getMyQuizAttempts(quizId), 'modules', options);
 
 // ─── Mutations (invalidate + call API) ───────────────────────
 export const updateProfile = async (data) => {

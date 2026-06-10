@@ -122,13 +122,8 @@
 .cert-locked-icon {
   width: 96px;
   height: 96px;
-  background: var(--grey-100);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--grey-400);
-  margin-bottom: var(--sp-6);
+  margin: 0 auto var(--sp-6);
 }
 
 .cert-locked-state h2 {
@@ -204,8 +199,8 @@
 }
 
 .completed .cpb-status {
-  background: var(--g-500);
-  border-color: var(--g-500);
+  background: var(--k-500);
+  border-color: var(--k-500);
   color: var(--white);
 }
 
@@ -256,8 +251,8 @@
 }
 
 .cert-action-btns .btn.active {
-  background: var(--g-100);
-  color: var(--g-800);
+  background: var(--k-100);
+  color: var(--k-800);
 }
 
 .cert-action-btns .btn-primary:disabled {

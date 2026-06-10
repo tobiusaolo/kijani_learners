@@ -43,7 +43,10 @@ export default function QuizTaker({ quizId, onComplete }) {
     setAnswers({});
     notifiedPassRef.current = false;
 
-    Promise.all([getQuizForTake(quizId), getMyQuizAttempts(quizId)])
+    Promise.all([
+      getQuizForTake(quizId, { force: true }),
+      getMyQuizAttempts(quizId, { force: true }),
+    ])
       .then(([quizRes, attemptsRes]) => {
         setQuiz(unwrapResponse(quizRes));
         const attempts = unwrapResponse(attemptsRes) || [];
@@ -111,10 +114,19 @@ export default function QuizTaker({ quizId, onComplete }) {
     }
   };
 
-  const handleTryAgain = () => {
+  const handleTryAgain = async () => {
     setRetaking(true);
     setResult(null);
     setAnswers({});
+    setLoading(true);
+    try {
+      const quizRes = await getQuizForTake(quizId, { force: true });
+      setQuiz(unwrapResponse(quizRes));
+    } catch {
+      setError('Could not load the latest questions. Please refresh the page.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {

@@ -92,9 +92,8 @@
 }
 .dash-stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .dash-stat-icon {
-  width: 46px; height: 46px; flex-shrink: 0;
+  width: 46px; height: 46px;
   border-radius: var(--r-md);
-  display: flex; align-items: center; justify-content: center;
 }
 .dash-stat-value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--charcoal); line-height: 1; }
 .dash-stat-label { font-size: .78rem; font-weight: 600; color: var(--grey-500); margin-top: 2px; }
@@ -119,7 +118,6 @@
 .module-prog-item.active { border-color: var(--g-300); background: var(--g-50); }
 .module-prog-item.locked { opacity: .55; }
 .module-prog-item:hover:not(.locked) { border-color: var(--g-200); }
-.mod-prog-emoji { font-size: 1.5rem; flex-shrink: 0; }
 .mod-prog-info { flex: 1; }
 .mod-prog-title { display: flex; align-items: center; gap: var(--sp-2); font-size: .875rem; font-weight: 600; color: var(--charcoal); }
 .mod-prog-num { font-size: .7rem; font-weight: 800; color: var(--g-500); letter-spacing: .08em; }
@@ -163,9 +161,7 @@
 .quick-link-item:hover { background: var(--g-50); border-color: var(--g-200); color: var(--g-700); }
 .quick-link-icon {
   width: 30px; height: 30px;
-  background: var(--g-50); border-radius: var(--r-sm);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--g-600);
+  border-radius: var(--r-sm);
 }
 
 @media (max-width: 1024px) {

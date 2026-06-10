@@ -1,5 +1,10 @@
 /* Apply Page CSS */
-.apply-page { min-height: 100vh; background: var(--off-white); }
+.apply-page {
+  min-height: 100vh;
+  background: var(--off-white);
+  display: flex;
+  flex-direction: column;
+}
 
 .apply-nav {
   background: var(--white); border-bottom: 1px solid var(--grey-200);
@@ -13,16 +18,13 @@
   font-size: 1rem; text-decoration: none;
 }
 .apply-logo-icon {
-  width: 34px; height: 34px; background: var(--white);
-  border: 1px solid var(--grey-200);
-  border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
-  color: var(--g-600);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  width: 34px; height: 34px;
+  border-radius: var(--r-sm);
 }
 
 .apply-container {
   display: grid; grid-template-columns: 400px 1fr;
-  gap: 0; min-height: calc(100vh - 64px);
+  gap: 0; flex: 1;
 }
 
 /* ── Left Info Panel ── */
@@ -81,8 +83,8 @@
   display: flex; align-items: center; justify-content: center;
   font-size: .75rem; font-weight: 700; transition: all var(--t-base);
 }
-.apply-step.active .apply-step-circle { background: var(--g-500); border-color: var(--g-500); color: var(--white); }
-.apply-step.done .apply-step-circle { background: var(--g-100); border-color: var(--g-400); color: var(--g-600); }
+.apply-step.active .apply-step-circle { background: var(--k-500); border-color: var(--k-500); color: var(--white); }
+.apply-step.done .apply-step-circle { background: var(--k-100); border-color: var(--k-400); color: var(--k-700); }
 
 .apply-form-body { flex: 1; padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-5); overflow-y: auto; }
 .apply-form-body h3 { color: var(--g-800); margin-bottom: var(--sp-2); }

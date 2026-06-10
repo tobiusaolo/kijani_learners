@@ -3,7 +3,13 @@
    ============================================================ */
 
 .auth-page {
-  display: flex; min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.auth-page-main {
+  display: flex;
+  flex: 1;
 }
 
 /* ── Left Panel ── */
@@ -16,9 +22,7 @@
 }
 .auth-logo { display: flex; align-items: center; gap: var(--sp-3); text-decoration: none; margin-bottom: var(--sp-16); }
 .auth-logo-icon {
-  width: 40px; height: 40px; background: var(--white); border-radius: var(--r-md);
-  display: flex; align-items: center; justify-content: center; color: var(--g-600);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  width: 40px; height: 40px; border-radius: var(--r-md);
 }
 .auth-logo-name { display: block; font-family: var(--font-display); font-weight: 800; color: var(--white); font-size: 1.1rem; }
 .auth-logo-sub  { display: block; font-size: .7rem; color: var(--k-300); letter-spacing: .06em; text-transform: uppercase; }
@@ -96,7 +100,7 @@
   padding: 4px 12px; font-size: .82rem; font-weight: 600; color: var(--g-700);
   text-decoration: none; transition: all var(--t-fast);
 }
-.demo-link:hover { background: var(--g-500); color: var(--white); border-color: var(--g-500); }
+.demo-link:hover { background: var(--k-500); color: var(--white); border-color: var(--k-500); }
 
 /* ── Steps (Register) ── */
 .register-steps { display: flex; gap: var(--sp-3); margin-bottom: var(--sp-8); }
@@ -104,8 +108,8 @@
   flex: 1; height: 4px; border-radius: var(--r-full);
   background: var(--grey-200); transition: background var(--t-base);
 }
-.reg-step.done { background: var(--g-500); }
-.reg-step.active { background: var(--g-300); }
+.reg-step.done { background: var(--k-500); }
+.reg-step.active { background: var(--k-300); }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {

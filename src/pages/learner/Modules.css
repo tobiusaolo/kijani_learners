@@ -49,11 +49,6 @@
   letter-spacing: .08em;
 }
 
-.mg-emoji {
-  font-size: 2.5rem;
-  margin-bottom: var(--sp-3);
-}
-
 .mg-title {
   color: var(--charcoal);
   margin-bottom: var(--sp-2);

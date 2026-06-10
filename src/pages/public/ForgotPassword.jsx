@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf, ArrowRight, CheckCircle, AlertCircle } from 'lucide-react';
 import apiClient from '../../api/client';
+import AppFooter from '../../components/AppFooter';
 import './Auth.css';
 
 export default function ForgotPassword() {
@@ -26,10 +27,11 @@ export default function ForgotPassword() {
 
   return (
     <div className="auth-page">
+      <div className="auth-page-main">
       <div className="auth-left">
         <div className="auth-left-inner">
           <Link to="/" className="auth-logo">
-            <div className="auth-logo-icon"><Leaf size={20} /></div>
+            <div className="auth-logo-icon icon-surface"><Leaf size={20} /></div>
             <div>
               <span className="auth-logo-name">Kijani Terrascape</span>
               <span className="auth-logo-sub">Digital Learning Journey</span>
@@ -53,7 +55,7 @@ export default function ForgotPassword() {
 
           {sent ? (
             <div style={{ textAlign: 'center', padding: '1rem 0' }}>
-              <CheckCircle size={52} color="#16a34a" style={{ marginBottom: '1.25rem' }} />
+              <span className="icon-surface icon-surface-lg" style={{ marginBottom: '1.25rem' }}><CheckCircle size={28} /></span>
               <h2 style={{ marginBottom: '0.5rem', color: 'var(--g-900)' }}>Check your inbox</h2>
               <p style={{ color: 'var(--grey-500)', marginBottom: '2rem', lineHeight: 1.6 }}>
                 If an account exists for <strong>{email}</strong>, we've sent a password reset link.
@@ -106,6 +108,8 @@ export default function ForgotPassword() {
           )}
         </div>
       </div>
+      </div>
+      <AppFooter variant="compact" />
     </div>
   );
 }

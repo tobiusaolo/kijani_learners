@@ -16,6 +16,7 @@ import LearnerAvatar from './LearnerAvatar';
 import PhaseBadge from './gamification/PhaseBadge';
 import { useGamification } from '../hooks/useGamification';
 import NotificationPanel, { useUnreadNotifications } from './gamification/NotificationPanel';
+import AppFooter from './AppFooter';
 import './LearnerLayout.css';
 import './gamification/gamification.css';
 
@@ -67,7 +68,7 @@ export default function LearnerLayout({ children, title, subtitle }) {
         aria-current={active ? 'page' : undefined}
         onClick={closeMobile}
       >
-        <span className="sidebar-nav-icon" aria-hidden>
+        <span className="sidebar-nav-icon icon-surface" aria-hidden>
           <Icon size={18} strokeWidth={active ? 2.25 : 2} />
         </span>
         {!collapsed && <span className="sidebar-nav-text">{label}</span>}
@@ -85,7 +86,7 @@ export default function LearnerLayout({ children, title, subtitle }) {
       >
         <header className="sidebar-header">
           <Link to="/learn/dashboard" className="sidebar-brand" onClick={closeMobile}>
-            <span className="sidebar-brand-mark">
+            <span className="sidebar-brand-mark icon-surface">
               <Leaf size={20} />
             </span>
             {!collapsed && (
@@ -178,7 +179,7 @@ export default function LearnerLayout({ children, title, subtitle }) {
           <div className="topbar-right">
             <button
               type="button"
-              className="topbar-icon-btn"
+              className="topbar-icon-btn icon-surface"
               style={{ position: 'relative' }}
               aria-label="Notifications"
               onClick={() => setNotifOpen((o) => !o)}
@@ -194,6 +195,7 @@ export default function LearnerLayout({ children, title, subtitle }) {
         </header>
 
         <main className="learner-content">{children}</main>
+        <AppFooter variant="compact" />
       </div>
     </div>
   );

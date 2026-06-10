@@ -21,9 +21,16 @@ import { showError } from '../../utils/swal';
 import { recordActivitySeconds } from '../../utils/masteryStorage';
 import { runGamificationEvent } from '../../utils/gamificationRunner';
 import { celebrateModuleComplete } from '../../utils/celebrate';
+import { getTopicReadingSections, splitParagraphs } from '../../utils/topicSections';
+import { getModuleContentSections } from '../../utils/moduleSections';
+import {
+  getReflectionPromptSubsections,
+  countWords,
+  REFLECTION_WORD_LIMIT,
+} from '../../utils/moduleReflectionPrompt';
 import './ModuleDetail.css';
 
-function renderEssayContent(content) {
+function renderLegacyEssayContent(content) {
   if (!content?.trim()) return null;
   return content.split(/\n\n+/).map((block, i) => {
     const trimmed = block.trim();
@@ -36,6 +43,61 @@ function renderEssayContent(content) {
     }
     return <p key={i}>{trimmed}</p>;
   });
+}
+
+function renderModuleContentSections(module) {
+  const sections = getModuleContentSections(module);
+  if (!sections.length) return null;
+
+  return (
+    <div className="module-content-sections">
+      {sections.map((section, sectionIndex) => (
+        <section key={`${section.title}-${sectionIndex}`} className="module-content-section">
+          {section.title ? (
+            <h3 className="module-content-section-title">{section.title}</h3>
+          ) : null}
+          <div className="module-content-subsections">
+            {section.subsections.map((subsection, subIndex) => (
+              <article key={`${subsection.title}-${subIndex}`} className="module-content-subsection">
+                {subsection.title ? (
+                  <h4 className="module-content-subsection-title">{subsection.title}</h4>
+                ) : null}
+                {subsection.paragraphs.map((paragraph, pIndex) => (
+                  <p key={pIndex} className="module-content-paragraph">{paragraph}</p>
+                ))}
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function renderTopicReading(topic) {
+  const sections = getTopicReadingSections(topic);
+  if (sections?.length) {
+    return sections.map((section, index) => (
+      <article key={`${section.title}-${index}`} className="topic-reading-section">
+        {section.title ? (
+          <h4 className="topic-reading-section-title">{section.title}</h4>
+        ) : null}
+        {splitParagraphs(section.body).map((paragraph, pIndex) => (
+          <p key={pIndex} className="topic-reading-section-text">{paragraph}</p>
+        ))}
+      </article>
+    ));
+  }
+
+  if (topic?.content?.trim()) {
+    return <div className="topic-reading-legacy">{renderLegacyEssayContent(topic.content)}</div>;
+  }
+
+  return (
+    <p className="text-muted">
+      No reading content has been added for this topic yet.
+    </p>
+  );
 }
 
 function buildSteps(moduleData) {
@@ -128,7 +190,7 @@ export default function ModuleDetail() {
   const progressPct = moduleData?.progress_pct ?? 0;
 
   const reloadModule = useCallback(() =>
-    getModuleDetail(moduleNum).then((res) => {
+    getModuleDetail(moduleNum, { force: true }).then((res) => {
       setModuleData(res.data);
       if (res.data.reflection_text) {
         setReflection(res.data.reflection_text);
@@ -153,7 +215,7 @@ export default function ModuleDetail() {
     } else {
       setLoading(true);
     }
-    getModuleDetail(moduleNum)
+    getModuleDetail(moduleNum, { force: true })
       .then((res) => {
         setModuleData(res.data);
         if (res.data.reflection_text) {
@@ -257,16 +319,25 @@ export default function ModuleDetail() {
   };
 
   const handleSaveReflection = async (advance = false) => {
+    if (!reflection.trim()) {
+      showError('Reflection required', 'Please write your reflection before saving.');
+      return;
+    }
+    if (reflectionOverLimit) {
+      showError('Word limit exceeded', `Your reflection must be ${REFLECTION_WORD_LIMIT} words or fewer.`);
+      return;
+    }
     setSavingReflection(true);
     try {
-      await saveReflection(moduleNum, reflection);
+      await saveReflection(moduleNum, reflection.trim());
       setReflectionSaved(true);
       await reloadModule();
       runGamificationEvent('reflection');
       if (advance) goNext();
     } catch (err) {
       console.error('Failed to save reflection', err);
-      showError('Could not save reflection', 'Please try again.');
+      const msg = err.response?.data?.detail || 'Please try again.';
+      showError('Could not save reflection', msg);
     } finally {
       setSavingReflection(false);
     }
@@ -310,7 +381,7 @@ export default function ModuleDetail() {
     return (
       <LearnerLayout title="Module Locked" subtitle="">
         <div className="card module-locked-card">
-          <Lock size={40} color="var(--grey-400)" />
+          <span className="icon-surface icon-surface-lg"><Lock size={26} /></span>
           <h3>This module is locked</h3>
           <p className="text-muted">{lockReason}</p>
           <Link to="/learn/modules" className="btn btn-primary">
@@ -321,9 +392,14 @@ export default function ModuleDetail() {
     );
   }
 
-  const reflectionPrompt =
-    moduleData?.description ||
-    `Reflect on what you learned in ${moduleData?.title || 'this module'}.`;
+  const reflectionPromptSubsections = getReflectionPromptSubsections(moduleData);
+  const reflectionWordCount = countWords(reflection);
+  const reflectionOverLimit = reflectionWordCount > REFLECTION_WORD_LIMIT;
+  const moduleContentSections = getModuleContentSections(moduleData);
+  const topicsWithStructuredReading = topics.filter(
+    (t) => getTopicReadingSections(t)?.length || t.content?.trim(),
+  ).length;
+  const hasReflectionPrompt = reflectionPromptSubsections.length > 0;
 
   const discussionPrompts = [
     'What idea from this module will you apply in your community?',
@@ -404,6 +480,40 @@ export default function ModuleDetail() {
                   <p>{moduleData.description}</p>
                 </div>
               )}
+
+              <div className="module-learning-overview">
+                <h3 className="module-section-title">Your learning path</h3>
+                <ul className="module-learning-overview-list">
+                  {moduleContentSections.length > 0 && (
+                    <li>
+                      <strong>{moduleContentSections.length}</strong> structured module section
+                      {moduleContentSections.length !== 1 ? 's' : ''} to read below
+                    </li>
+                  )}
+                  {moduleData?.has_pre_assessment && (
+                    <li>Pre-assessment before topics</li>
+                  )}
+                  {topics.length > 0 && (
+                    <li>
+                      <strong>{topics.length}</strong> topic{topics.length !== 1 ? 's' : ''}
+                      {topicsWithStructuredReading > 0
+                        ? ` with structured readings`
+                        : ''}
+                    </li>
+                  )}
+                  {moduleData?.has_post_assessment && (
+                    <li>Post-assessment after topics</li>
+                  )}
+                  <li>
+                    Reflection essay
+                    {hasReflectionPrompt ? ' with facilitator prompts' : ''}
+                    {' '}(max {REFLECTION_WORD_LIMIT} words)
+                  </li>
+                  <li>Module discussion with peers</li>
+                </ul>
+              </div>
+
+              {renderModuleContentSections(moduleData)}
 
               {moduleData?.intro_video_url && !moduleData?.intro_video_done && (
                 <p className="module-intro-hint text-sm text-muted">
@@ -486,14 +596,8 @@ export default function ModuleDetail() {
                     ? ` · ~${activeTopic.estimated_minutes} min`
                     : ''}
                 </h3>
-                <div className="reading-body module-essay-body">
-                  {activeTopic.content
-                    ? renderEssayContent(activeTopic.content)
-                    : (
-                      <p className="text-muted">
-                        No reading content has been added for this topic yet.
-                      </p>
-                    )}
+                <div className="reading-body module-essay-body topic-reading-body">
+                  {renderTopicReading(activeTopic)}
                 </div>
               </div>
 
@@ -588,19 +692,49 @@ export default function ModuleDetail() {
               <header className="module-step-header">
                 <span className="module-step-kicker">Step {stepIndex + 1}</span>
                 <h2>Module reflection</h2>
+                {reflectionSaved && moduleData?.reflection_text && (
+                  <span className="badge badge-success" style={{ marginTop: '0.5rem' }}>
+                    Reflection submitted
+                  </span>
+                )}
               </header>
-              <div className="reflection-prompt-card">
-                <span style={{ fontSize: '2rem' }}>✍️</span>
-                <div>
-                  <h4>Reflection prompt</h4>
-                  <p>{reflectionPrompt}</p>
-                </div>
+              <div className="module-reflection-prompts">
+                <h3 className="module-section-title">Reflection prompts</h3>
+                {reflectionPromptSubsections.length > 0 ? (
+                  reflectionPromptSubsections.map((sub, subIndex) => (
+                    <article key={`${sub.title}-${subIndex}`} className="reflection-prompt-block">
+                      {sub.title ? <h4 className="reflection-prompt-subtitle">{sub.title}</h4> : null}
+                      {sub.paragraphs.map((paragraph, pIndex) => (
+                        <p key={pIndex} className="reflection-prompt-text">{paragraph}</p>
+                      ))}
+                    </article>
+                  ))
+                ) : (
+                  <div className="reflection-prompt-card">
+                    <span className="icon-surface icon-surface-md"><BookOpen size={22} /></span>
+                    <div>
+                      <h4>Reflection prompt</h4>
+                      <p>
+                        {moduleData?.description ||
+                          `Reflect on what you learned in ${moduleData?.title || 'this module'}.`}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="form-group">
-                <label className="form-label">Your reflection</label>
+                <div className="reflection-essay-header">
+                  <label className="form-label">Your reflection essay</label>
+                  <span className={`reflection-word-count ${reflectionOverLimit ? 'over-limit' : ''}`}>
+                    {reflectionWordCount} / {REFLECTION_WORD_LIMIT} words
+                  </span>
+                </div>
+                <p className="text-sm text-muted" style={{ marginBottom: '0.75rem' }}>
+                  Write a structured response addressing the prompts above. Maximum {REFLECTION_WORD_LIMIT} words.
+                </p>
                 <textarea
                   className="form-input form-textarea module-reflection-input"
-                  placeholder="Begin writing your reflection here…"
+                  placeholder="Begin writing your reflection essay here…"
                   value={reflection}
                   onChange={(e) => {
                     setReflection(e.target.value);
@@ -608,12 +742,17 @@ export default function ModuleDetail() {
                   }}
                   disabled={savingReflection}
                 />
+                {reflectionOverLimit && (
+                  <p className="reflection-limit-warning">
+                    Please shorten your essay to {REFLECTION_WORD_LIMIT} words or fewer before submitting.
+                  </p>
+                )}
               </div>
               <StepNav
                 onBack={goBack}
                 onNext={() => handleSaveReflection(true)}
-                nextLabel={savingReflection ? 'Saving…' : 'Save & continue'}
-                nextDisabled={savingReflection || !reflection.trim()}
+                nextLabel={savingReflection ? 'Saving…' : 'Submit & continue'}
+                nextDisabled={savingReflection || !reflection.trim() || reflectionOverLimit}
                 secondaryAction={() => handleSaveReflection(false)}
                 secondaryLabel="Save draft"
               />
@@ -700,7 +839,7 @@ export default function ModuleDetail() {
                       </div>
                     ) : discussions.length === 0 ? (
                       <div className="discussion-empty-state">
-                        <MessageSquare size={32} color="var(--g-400)" />
+                        <span className="icon-surface icon-surface-md"><MessageSquare size={22} /></span>
                         <p><strong>No posts yet</strong></p>
                         <p className="text-sm text-muted">Be the first to start the conversation for this module.</p>
                       </div>

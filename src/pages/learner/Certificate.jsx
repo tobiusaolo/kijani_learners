@@ -98,7 +98,9 @@ export default function Certificate() {
             {!canDownload && (
               <div className="cert-requirements-banner card">
                 <div className="cert-requirements-header">
-                  <Lock size={20} color="var(--g-600)" />
+                  <span className="icon-surface" style={{ width: 36, height: 36, borderRadius: 'var(--r-md)', flexShrink: 0 }}>
+                    <Lock size={18} />
+                  </span>
                   <div>
                     <h3>Download requirements</h3>
                     <p className="text-muted text-sm">
